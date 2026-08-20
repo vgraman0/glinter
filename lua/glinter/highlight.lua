@@ -167,6 +167,7 @@ function M.refresh(buf)
 
     pcall(vim.api.nvim_buf_set_extmark, buf, ns, d.lnum, col, opts)
   end
+  require("glinter.hover").update(buf, diags)
 end
 
 local function schedule(buf)
@@ -217,8 +218,10 @@ function M.attach(buf)
     buffer = buf,
     callback = function()
       attached[buf] = nil
+      require("glinter.hover").detach(buf)
     end,
   })
+  require("glinter.hover").attach(buf)
   M.refresh(buf)
 end
 
@@ -230,6 +233,7 @@ function M.setup(opts)
   if opts.colorcolumn ~= nil then
     config.colorcolumn = opts.colorcolumn
   end
+  require("glinter.hover").setup(opts)
   if ns then
     return
   end

@@ -63,8 +63,6 @@ for i = 1, #marks do
 end
 check(found_s2, "51st character highlighted at col 50")
 
-<<<<<<< HEAD
-=======
 local hard = vim.api.nvim_get_hl(0, { name = "GlinterHard" })
 check(hard.fg ~= nil, "GlinterHard sets a foreground")
 check(hard.bg ~= nil, "GlinterHard sets a background")
@@ -95,11 +93,15 @@ if win and vim.api.nvim_win_is_valid(win) then
   check(text:find("stronger verb", 1, true) ~= nil, "hover shows adverb advice")
 end
 
+-- Insert-mode cursor sits on the exclusive end after the last character.
+vim.api.nvim_win_set_cursor(0, { 1, 8 + #"really" })
+win = hover.show(buf)
+check(win ~= nil and vim.api.nvim_win_is_valid(win), "hover opens at insert cursor after span")
+
 vim.api.nvim_win_set_cursor(0, { 1, 0 })
 win = hover.show(buf)
 check(win == nil, "hover closes off a highlight")
 
->>>>>>> 7dcecdb (Darken highlight text for contrast)
 io.stdout:write(string.format("nvim highlight checks done, %d failed\n", failed))
 if failed > 0 then
   os.exit(1)

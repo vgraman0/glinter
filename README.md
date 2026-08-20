@@ -26,11 +26,17 @@ The plugin attaches on `FileType gitcommit` and refreshes on
 require("glinter").setup({
   debounce_ms = 40,
   colorcolumn = true, -- 51 and 73
+  hover_ms = 300, -- delay before the recommendation float
 })
 ```
 
-Colors match Hemingway: yellow/red sentences, blue adverbs and
-qualifiers, green passive, purple simpler words.
+Colors are set by glinter, not your colorscheme: Hemingway pastels
+(yellow/red sentences, blue adverbs, green passive, purple simpler
+words) with a dark foreground so the text stays readable. Override
+the `Glinter*` highlight groups if you want them to follow a theme.
+
+Rest the cursor on a highlight (or press `K` / `:GlinterHover`) to see
+the rule id and the fix, for example `[H4] Use active voice`.
 
 ## CLI and hook
 
