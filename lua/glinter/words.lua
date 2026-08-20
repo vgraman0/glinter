@@ -1,0 +1,160 @@
+-- Closed word lists for Hemingway-style checks.
+-- Keys are lowercase ASCII. Not CS vocabulary.
+local function set(list)
+  local t = {}
+  for i = 1, #list do
+    t[list[i]] = true
+  end
+  return t
+end
+
+local M = {}
+
+M.adverb_allow = set({
+  "ally",
+  "anomaly",
+  "apply",
+  "assembly",
+  "belly",
+  "bully",
+  "comply",
+  "daily",
+  "early",
+  "family",
+  "firefly",
+  "fly",
+  "folly",
+  "gully",
+  "holly",
+  "imply",
+  "italy",
+  "jelly",
+  "july",
+  "likely",
+  "lily",
+  "monthly",
+  "monopoly",
+  "multiply",
+  "only",
+  "rally",
+  "rely",
+  "reply",
+  "supply",
+  "tally",
+  "weekly",
+  "yearly",
+})
+
+M.intensifiers = set({
+  "extremely",
+  "quite",
+  "rather",
+  "really",
+  "too",
+  "very",
+})
+
+M.irregular_participles = set({
+  "broken",
+  "built",
+  "chosen",
+  "come",
+  "done",
+  "driven",
+  "fed",
+  "felt",
+  "forgotten",
+  "found",
+  "given",
+  "gone",
+  "got",
+  "gotten",
+  "held",
+  "hidden",
+  "hit",
+  "kept",
+  "known",
+  "left",
+  "lost",
+  "made",
+  "meant",
+  "met",
+  "paid",
+  "put",
+  "read",
+  "run",
+  "said",
+  "seen",
+  "sent",
+  "set",
+  "shown",
+  "sold",
+  "spent",
+  "struck",
+  "taken",
+  "taught",
+  "told",
+  "understood",
+  "won",
+  "written",
+})
+
+M.qualifiers = {
+  "i believe",
+  "i think",
+  "i feel",
+  "sort of",
+  "kind of",
+  "try to",
+  "a bit",
+  "basically",
+  "essentially",
+  "maybe",
+  "perhaps",
+  "possibly",
+  "probably",
+  "seemingly",
+  "slightly",
+  "somewhat",
+  "seemed",
+  "seems",
+  "just",
+}
+
+M.simpler = {
+  { from = "due to the fact that", to = "because" },
+  { from = "in the event that", to = "if" },
+  { from = "in order to", to = "to" },
+  { from = "at this time", to = "now" },
+  { from = "subsequently", to = "then" },
+  { from = "demonstrate", to = "show" },
+  { from = "facilitate", to = "help" },
+  { from = "necessitate", to = "need" },
+  { from = "accomplish", to = "do" },
+  { from = "additional", to = "more" },
+  { from = "sufficient", to = "enough" },
+  { from = "commence", to = "start" },
+  { from = "leverage", to = "use" },
+  { from = "numerous", to = "many" },
+  { from = "regarding", to = "about" },
+  { from = "remainder", to = "rest" },
+  { from = "therefore", to = "so" },
+  { from = "terminate", to = "end" },
+  { from = "attempt", to = "try" },
+  { from = "utilize", to = "use" },
+  { from = "assist", to = "help" },
+  { from = "obtain", to = "get" },
+}
+
+M.be_verbs = set({
+  "am",
+  "is",
+  "are",
+  "was",
+  "were",
+  "be",
+  "been",
+  "being",
+})
+
+return M

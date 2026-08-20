@@ -1,0 +1,4 @@
+#!/bin/sh
+# Reject commit messages that fail glinter (errors and warnings).
+ROOT="$(git rev-parse --show-toplevel)"
+exec "$ROOT/bin/glinter" "$1"
