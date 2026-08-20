@@ -1,24 +1,23 @@
 ---
 name: glinter
-description: Write simple git commit messages (Chris Beams + Hemingway, no grade level). Use when committing, drafting COMMIT_EDITMSG, amending, squashing, or reviewing commit text.
+description: Write simple git commit messages (Chris Beams + Hemingway, no grade level). Use when committing, drafting COMMIT_EDITMSG, amending, squashing, or reviewing commit text. Neovim and bin/glinter are optional.
 ---
 
 # Glinter commit messages
 
-Every commit in this repo must pass `bin/glinter`. Do not use Conventional
-Commits (`feat:`, `fix:`). Do not skip the hook with `--no-verify`.
-
 A properly formed subject completes: **If applied, this commit will
-\<subject\>**.
+\<subject\>**. Do not use Conventional Commits (`feat:`, `fix:`).
+
+This skill is enough on its own. Neovim highlighting and `bin/glinter`
+are optional extras, not requirements.
 
 ## Before you commit
 
 1. Write the message (subject + optional body).
-2. Run `bin/glinter path/to/COMMIT_EDITMSG` (or `--stdin`).
-3. Fix every diagnostic. This repo fails on errors **and** warnings.
-
-In Neovim, glinter highlights `gitcommit` buffers while you type. Comments
-and the verbose diff are not part of the message.
+2. If `bin/glinter` exists in the repo or on `PATH`, run it on the
+   message (`bin/glinter FILE` or `--stdin`) and fix every diagnostic.
+3. If `bin/glinter` is missing, follow the tables below by hand.
+4. Do not skip a repository `commit-msg` hook with `--no-verify`.
 
 ## Structure (must-fix)
 
@@ -83,4 +82,6 @@ framework so that highlighting can basically be applied in a way that is
 very easily understood by users who might perhaps want to leverage it.
 ```
 
-Full catalog: [docs/rules.md](../../../docs/rules.md).
+Full catalog: [docs/rules.md](../../../docs/rules.md) when this file
+lives in the glinter repository. The tables above are enough if you
+copied only the skill.

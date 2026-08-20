@@ -6,15 +6,21 @@ level. No Conventional Commits.
 
 While you type in `COMMIT_EDITMSG`, glinter paints the **message** lines
 only. Git comments and the verbose diff are left alone. The same rules
-run in a `commit-msg` hook and in CI.
+are in a Cursor skill, a `commit-msg` hook, and CI.
 
-## Install (Neovim)
+Use Neovim, the agent skill, the CLI, or any mix. None of them requires
+the others.
+
+## Neovim only
+
+Add this repository as a plugin. You do not need the Cursor skill, the
+CLI, or a git hook. Only `lua/` and `plugin/` load.
 
 lazy.nvim:
 
 ```lua
 {
-  dir = "/path/to/glinter", -- or your git URL
+  "vgraman0/glinter",
   ft = "gitcommit",
 }
 ```
@@ -38,7 +44,26 @@ the `Glinter*` highlight groups if you want them to follow a theme.
 Rest the cursor on a highlight (or press `K` / `:GlinterHover`) to see
 the rule id and the fix, for example `[H4] Use active voice`.
 
+A plugin install does not copy the Cursor skill into your project.
+
+## Agent skill only
+
+Copy [`.cursor/skills/glinter/SKILL.md`](.cursor/skills/glinter/SKILL.md)
+to one of:
+
+- this project: `.cursor/skills/glinter/SKILL.md`
+- every project: `~/.cursor/skills/glinter/SKILL.md`
+
+The skill is the rule tables. Cursor does not need Neovim, `bin/glinter`,
+or this repository on disk after the copy.
+
+Optional: copy [`.cursor/rules/glinter.mdc`](.cursor/rules/glinter.mdc)
+so the skill always applies when committing. That rule file tells the
+agent to run `bin/glinter` only when the binary exists.
+
 ## CLI and hook
+
+Optional enforcement, used in this repository:
 
 ```
 bin/glinter FILE
@@ -46,14 +71,15 @@ bin/glinter --stdin
 bin/glinter --range origin/main..HEAD
 ```
 
-Needs Lua 5.1+ or Neovim. In this repository:
+Needs Lua 5.1+ or Neovim. In a clone of this repository:
 
 ```
 make hooks    # git config core.hooksPath .githooks
 make test
 ```
 
-The hook fails on errors and warnings.
+The hook fails on errors and warnings. You can use the CLI without
+Neovim or Cursor.
 
 ## Rules
 
