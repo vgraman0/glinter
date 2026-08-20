@@ -1,0 +1,5 @@
+fixed the thing.
+
+Added a really comprehensive implementation that utilizes the new
+framework so that highlighting can basically be applied in a way that is
+very easily understood by users who might perhaps want to leverage it.

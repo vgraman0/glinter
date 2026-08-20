@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+export LUA_PATH="${ROOT}/lua/?.lua;${ROOT}/lua/?/init.lua;${LUA_PATH:-;;}"
+
+if command -v lua >/dev/null 2>&1; then
+  exec lua "${ROOT}/bin/glinter.lua" "$@"
+fi
+if command -v lua5.4 >/dev/null 2>&1; then
+  exec lua5.4 "${ROOT}/bin/glinter.lua" "$@"
+fi
+if command -v lua5.1 >/dev/null 2>&1; then
+  exec lua5.1 "${ROOT}/bin/glinter.lua" "$@"
+fi
+if command -v nvim >/dev/null 2>&1; then
+  exec nvim --headless -u NONE -n -l "${ROOT}/bin/glinter.lua" "$@"
+fi
+
+echo "glinter: need lua or nvim" >&2
+exit 127
