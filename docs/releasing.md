@@ -34,8 +34,9 @@ before it writes the tag. It does not push.
 
 ## LuaRocks, once
 
-The `luarocks` workflow uploads a rock for every `v*` tag. It needs an API
-key, and it skips the upload with a notice until the key is there:
+The `luarocks` workflow uploads a rock for every `v*` tag. Only the upload
+needs an API key. Until the key is there, a tag skips the upload with a
+notice, while pull requests still build and install the rock:
 
 1. Register at [luarocks.org](https://luarocks.org), and confirm that the
    name `glinter` is free.
@@ -58,7 +59,8 @@ no entry for the version. Otherwise it runs the tests and publishes the
 GitHub Release with that entry as the notes.
 
 `.github/workflows/luarocks.yml` runs on the same tag and uploads the rock.
-A pull request builds and installs the rock without uploading it.
+A pull request, or a manual run, builds and installs the rock instead of
+uploading it, so the rockspec is checked before a tag depends on it.
 
 ## Fixing a bad tag
 
