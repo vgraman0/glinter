@@ -12,22 +12,49 @@ are in a Cursor skill, a `commit-msg` hook, and CI.
 Use Neovim, the agent skill, the CLI, or any mix. None of them requires
 the others.
 
-## Neovim only
+## Neovim, first time
 
-Add this repository as a plugin. You do not need the Cursor skill, the
-CLI, or a git hook. Only `lua/` and `plugin/` load.
+Install [Neovim](https://neovim.io) (`nvim --version`). You do not need
+a plugin manager, an `init.lua`, or any Lua.
 
-lazy.nvim:
-
-```lua
-{
-  "vgraman0/glinter",
-  ft = "gitcommit",
-}
+```sh
+git clone https://github.com/vgraman0/glinter
+cd glinter
+./install-nvim
 ```
 
+That links this clone into Neovim's built-in plugin folder. Keep the
+clone; update with `git pull` and restart Neovim.
+
+Point git at Neovim, then commit as usual:
+
+```sh
+git config --global core.editor nvim
+git commit
+```
+
+While you type, glinter paints the **message** lines. Git comments and
+the verbose diff stay as they are. Quit Neovim with `:q`.
+
+See a sample without committing:
+
+```sh
+./install-nvim --try
+```
+
+Windows (PowerShell), skip the script and clone into Neovim's plugin
+folder:
+
+```powershell
+git clone https://github.com/vgraman0/glinter $env:LOCALAPPDATA\nvim-data\site\pack\glinter\start\glinter
+```
+
+You do not need the Cursor skill, the CLI, or a git hook. Only `lua/`
+and `plugin/` load.
+
 The plugin attaches on `FileType gitcommit` and refreshes on
-`TextChanged` / `TextChangedI`. Optional setup:
+`TextChanged` / `TextChangedI`. Skip the next block unless you want
+to change defaults:
 
 ```lua
 require("glinter").setup({
@@ -47,6 +74,23 @@ Rest the cursor on a highlight (or press `K` / `:GlinterHover`) to see
 the rule id and the fix, for example `[H4] Use active voice`.
 
 A plugin install does not copy the Cursor skill into your project.
+
+### Already using a plugin manager?
+
+Skip `./install-nvim`. lazy.nvim:
+
+```lua
+{
+  "vgraman0/glinter",
+  ft = "gitcommit",
+}
+```
+
+Neovim 0.12 (`vim.pack`):
+
+```lua
+vim.pack.add({ "https://github.com/vgraman0/glinter" })
+```
 
 ## Agent skill only
 
