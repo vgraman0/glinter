@@ -40,6 +40,8 @@ fi
 
 empty_path=$tmp/empty-path
 mkdir -p "$empty_path"
+# Hide nvim and vim. Keep dirname so ROOT is resolved before need_nvim.
+ln -s "$(command -v dirname)" "$empty_path/dirname"
 if PATH=$empty_path "$installer" >"$out" 2>"$err"; then
   fail "missing nvim must fail"
 else
