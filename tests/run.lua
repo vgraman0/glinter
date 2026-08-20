@@ -68,6 +68,7 @@ local names = {
   "parse_spec.lua",
   "cbeams_spec.lua",
   "english_spec.lua",
+  "version_spec.lua",
 }
 for i = 1, #names do
   local path = here() .. "/" .. names[i]

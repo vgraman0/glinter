@@ -2,6 +2,7 @@ local parse = require("glinter.parse")
 
 local M = {}
 
+M.version = require("glinter.version")
 M.parse = parse.classify
 M.lint = require("glinter.rules").lint
 M.rules = require("glinter.rules")

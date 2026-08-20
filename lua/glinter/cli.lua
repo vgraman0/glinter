@@ -1,4 +1,5 @@
 local rules = require("glinter.rules")
+local version = require("glinter.version")
 
 local M = {}
 
@@ -6,6 +7,7 @@ local function usage()
   io.stderr:write("Usage: glinter FILE\n")
   io.stderr:write("       glinter --stdin\n")
   io.stderr:write("       glinter --range REV\n")
+  io.stderr:write("       glinter --version\n")
   os.exit(2)
 end
 
@@ -115,6 +117,9 @@ function M.run(args)
   local n
   if mode == "--help" or mode == "-h" then
     usage()
+  elseif mode == "--version" or mode == "-v" then
+    io.stdout:write("glinter " .. version .. "\n")
+    return
   elseif mode == "--stdin" then
     local text = io.stdin:read("*a") or ""
     n = print_diags("<stdin>", text)

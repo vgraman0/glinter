@@ -83,13 +83,16 @@ Skip `./install-nvim`. lazy.nvim:
 {
   "vgraman0/glinter",
   ft = "gitcommit",
+  version = "*", -- latest release; drop this line to track main
 }
 ```
 
 Neovim 0.12 (`vim.pack`):
 
 ```lua
-vim.pack.add({ "https://github.com/vgraman0/glinter" })
+vim.pack.add({
+  { src = "https://github.com/vgraman0/glinter", version = vim.version.range("*") },
+})
 ```
 
 ## Agent skill only
@@ -115,6 +118,7 @@ Optional enforcement, used in this repository:
 bin/glinter FILE
 bin/glinter --stdin
 bin/glinter --range origin/main..HEAD
+bin/glinter --version
 ```
 
 Needs Lua 5.1+ or Neovim. In a clone of this repository:
@@ -131,3 +135,13 @@ Neovim or Cursor.
 
 See [docs/rules.md](docs/rules.md) and
 [`.cursor/skills/glinter/SKILL.md`](.cursor/skills/glinter/SKILL.md).
+
+## Releases
+
+Releases are tags of the form `vMAJOR.MINOR.PATCH`. Read
+[CHANGELOG.md](CHANGELOG.md) for what each one changed, and
+[docs/releasing.md](docs/releasing.md) for how to cut one. `bin/glinter
+--version` and `require("glinter").version` print the version you have.
+
+Version 0.x means the Lua API and the rule ids can still change in a
+minor release.
