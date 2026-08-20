@@ -1,0 +1,14 @@
+---
+description: Every git commit message must pass glinter
+alwaysApply: true
+---
+
+When writing, amending, or squashing git commits, follow
+`.cursor/skills/glinter/SKILL.md` and run `bin/glinter` on the message.
+
+- Imperative subject, ≤50 characters preferred, hard cap 72
+- Capitalize the subject; no trailing period
+- Blank line before the body; wrap the body at 72
+- Simple prose: no adverbs, passive voice, qualifiers, or weasel words
+- No Conventional Commits prefixes (`feat:`, `fix:`)
+- Do not use `--no-verify` to skip the hook

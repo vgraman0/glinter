@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Lua and Neovim
+        run: sudo apt-get update && sudo apt-get install -y lua5.4 neovim
+
+      - name: Run tests
+        run: make test
+
+      - name: Lint commit messages
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            BEFORE="${{ github.event.before }}"
+            if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+              ./bin/glinter --range HEAD^!
+            else
+              ./bin/glinter --range "${BEFORE}..HEAD"
+            fi
+          else
+            git fetch origin main || true
+            if git rev-parse --verify origin/main >/dev/null 2>&1; then
+              ./bin/glinter --range origin/main..HEAD
+            fi
+          fi
