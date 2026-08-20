@@ -17,6 +17,10 @@ Diagnostics apply to the real message only:
 Byte offsets use buffer coordinates in `COMMIT_EDITMSG`. Classify which
 ranges to lint; do not delete lines from the buffer.
 
+Live Neovim highlighting re-classifies the buffer on every edit and
+paints only message ranges. Comment lines and the verbose diff stay
+with the default gitcommit syntax.
+
 ## Chris Beams structure (must-fix)
 
 Git tooling and [How to Write a Git Commit Message](https://cbea.ms/git-commit/).
