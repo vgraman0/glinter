@@ -73,6 +73,8 @@ theme.
 Rest the cursor on a highlight (or press `K` / `:GlinterHover`) to see
 the rule id and the fix, for example `[H4] Use active voice`.
 
+Full docs in Neovim: `:help glinter`.
+
 A plugin install does not copy the Cursor skill into your project.
 
 ### Already using a plugin manager?
@@ -148,8 +150,9 @@ Neovim or Cursor.
 
 ## Rules
 
-See [docs/rules.md](docs/rules.md) and
-[`.cursor/skills/glinter/SKILL.md`](.cursor/skills/glinter/SKILL.md).
+See [docs/rules.md](docs/rules.md),
+[`.cursor/skills/glinter/SKILL.md`](.cursor/skills/glinter/SKILL.md), or
+`:help glinter-rules`.
 
 ## Releases
 

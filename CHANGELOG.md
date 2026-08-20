@@ -33,6 +33,8 @@ First tagged release.
 - `install-nvim` for people who do not use a plugin manager.
 - A rock on luarocks.org for every tag, so `rocks.nvim` and
   `luarocks install glinter` both work.
+- `:help glinter`, covering install, options, commands, highlight groups,
+  the rules, and the CLI.
 
 [Unreleased]: https://github.com/vgraman0/glinter/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/vgraman0/glinter/releases/tag/v0.1.0

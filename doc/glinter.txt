@@ -1,0 +1,217 @@
+*glinter.txt*  Live highlighting for git commit messages, while you type
+
+                                                      *glinter* *glinter.nvim*
+
+                       Structure follows Chris Beams.
+                       Prose follows clear English.
+                       No grade level. No Conventional Commits.
+
+==============================================================================
+CONTENTS                                                    *glinter-contents*
+
+  1. Intro ................................. |glinter-intro|
+  2. Install ............................... |glinter-install|
+  3. Usage ................................. |glinter-usage|
+  4. Configuration ......................... |glinter-config|
+  5. Commands and mappings ................. |glinter-commands|
+  6. Highlight groups ...................... |glinter-highlights|
+  7. Rules ................................. |glinter-rules|
+  8. Command line .......................... |glinter-cli|
+  9. Agent skill ........................... |glinter-skill|
+ 10. License ............................... |glinter-license|
+
+==============================================================================
+1. INTRO                                                       *glinter-intro*
+
+glinter paints a commit message while you write it. It attaches to the
+'gitcommit' filetype, so it runs in COMMIT_EDITMSG when git opens Neovim.
+
+It paints the message lines only. Git comments and the verbose diff keep
+the highlighting they already have.
+
+Two rule sets run together. Structure comes from Chris Beams, How to Write
+a Git Commit Message: subject length, mood, and body wrapping. Prose comes
+from clear English: short sentences, active voice, and plain words. There
+is no readability score, and there are no Conventional Commit types.
+
+The same rules ship as a command line linter, a commit-msg hook, and an
+agent skill. None of them needs the others.
+
+==============================================================================
+2. INSTALL                                                   *glinter-install*
+
+With lazy.nvim: >lua
+    {
+      "vgraman0/glinter",
+      ft = "gitcommit",
+      version = "*", -- latest release; drop this line to track main
+    }
+<
+With vim.pack (Neovim 0.12 and later): >lua
+    vim.pack.add({
+      {
+        src = "https://github.com/vgraman0/glinter",
+        version = vim.version.range("*"),
+      },
+    })
+<
+With rocks.nvim: >vim
+    :Rocks install glinter
+<
+Without a plugin manager, clone the repository and run the installer. It
+links the clone into Neovim's built-in plugin folder: >bash
+    git clone https://github.com/vgraman0/glinter
+    cd glinter
+    ./install-nvim
+<
+Then point git at Neovim: >bash
+    git config --global core.editor nvim
+<
+The plugin calls |glinter.setup()| for you. Call it again only to change a
+default. See |glinter-config|.
+
+==============================================================================
+3. USAGE                                                       *glinter-usage*
+
+Commit as usual: >bash
+    git commit
+<
+Highlights appear as you type and follow every edit. Rest the cursor on
+one, or press K, to read the rule id and the fix, for example: >
+    [H4] Use active voice
+<
+Two color columns mark the subject limits at 51 and 73. Nothing blocks the
+commit. Quit with |:q| and git takes the message as written.
+
+To reject a bad message instead, use the commit-msg hook or the command
+line linter. See |glinter-cli|.
+
+==============================================================================
+4. CONFIGURATION                                              *glinter-config*
+
+glinter.setup({opts})                                        *glinter.setup()*
+
+    Parameters: ~
+      • {opts} (table) Options, all optional:
+
+        • {debounce_ms} (number) Milliseconds to wait after an edit before
+          repainting. Default 40.
+        • {colorcolumn} (boolean) Set 'colorcolumn' to 51 and 73 in the
+          commit buffer. Default true.
+        • {hover_ms} (number) Milliseconds the cursor must rest on a
+          highlight before the recommendation float opens. Default 300.
+
+    Example: >lua
+        require("glinter").setup({
+          debounce_ms = 40,
+          colorcolumn = true,
+          hover_ms = 300,
+        })
+<
+glinter.version                                              *glinter.version*
+
+    The installed version, as a string such as `0.1.0`.
+
+==============================================================================
+5. COMMANDS AND MAPPINGS                                    *glinter-commands*
+
+:GlinterHover                                                  *:GlinterHover*
+
+    Open the recommendation float for the highlight under the cursor. It
+    names the rule and the fix. Close it by moving the cursor.
+
+K                                                                  *glinter-K*
+
+    Same as |:GlinterHover|, mapped in the commit buffer only.
+
+:GlinterRefresh                                              *:GlinterRefresh*
+
+    Repaint the current buffer now. Edits repaint on their own, so this is
+    for a changed setting or a stale buffer.
+
+==============================================================================
+6. HIGHLIGHT GROUPS                                       *glinter-highlights*
+
+glinter defines its own colors rather than following your colorscheme, so
+the meaning of each color stays the same everywhere. Every group is a
+default, so your own |:highlight| command wins.
+
+    *hl-GlinterError*         Must fix: an empty, long, uncapitalized, or
+                            period-ended subject, and unwrapped body lines
+    *hl-GlinterWarning*       Should fix: mood, WIP, why-not-how
+    *hl-GlinterSubjectSoft*   Subject past 50 characters
+    *hl-GlinterSubjectHard*   Subject past 72 characters
+    *hl-GlinterHard*          Sentence over 20 words
+    *hl-GlinterVeryHard*      Sentence over 30 words
+    *hl-GlinterAdverb*        Manner adverb or intensifier
+    *hl-GlinterQualifier*     Hedge, such as `maybe` or `I think`
+    *hl-GlinterPassive*       Passive voice
+    *hl-GlinterComplex*       Word with a simpler synonym
+    *hl-GlinterReplacement*   The suggested simpler word, shown inline
+
+To follow your theme instead: >lua
+    vim.api.nvim_set_hl(0, "GlinterPassive", { link = "DiagnosticWarn" })
+<
+==============================================================================
+7. RULES                                                       *glinter-rules*
+
+Structure, from Chris Beams: >
+    S0  Subject is empty
+    S1  Blank line between subject and body
+    S2  Subject is over 50 characters
+    S3  Subject is over 72 characters
+    S4  Subject starts with a capital
+    S5  Subject does not end with punctuation
+    S6  Subject is in the imperative mood
+    S7  Subject does not start with WIP
+    B1  Body lines wrap at 72 characters
+    C1  Body explains why, not how
+<
+Prose, from clear English: >
+    H1  Sentence is over 20 words
+    H2  Sentence is over 30 words
+    H3  Adverb or intensifier
+    H4  Passive voice
+    H5  Hedge or qualifier
+    H6  Word with a simpler synonym
+<
+Merge, revert, fixup, squash, and amend subjects are exempt. Trailers such
+as `Signed-off-by:` and lines that hold only a URL are exempt from B1.
+
+Grade level, grammar, spelling, and Conventional Commit types are out of
+scope. The full catalog, with each heuristic, is in docs/rules.md in the
+repository.
+
+==============================================================================
+8. COMMAND LINE                                                  *glinter-cli*
+
+The same rules run outside Neovim. The command exits 1 when it finds a
+problem, so a hook or a CI job can reject the message: >bash
+    glinter FILE
+    glinter --stdin
+    glinter --range origin/main..HEAD
+    glinter --version
+<
+Install it with `luarocks install glinter`, or run `bin/glinter` from a
+clone. It needs Lua 5.1 or later, or Neovim.
+
+In a clone, `make hooks` points git at the bundled commit-msg hook, which
+rejects a commit that fails a rule.
+
+==============================================================================
+9. AGENT SKILL                                                 *glinter-skill*
+
+The rule tables also ship as an agent skill, so a coding agent writes
+commit messages the same way. Copy .cursor/skills/glinter/SKILL.md from
+the repository into your own project, or into ~/.cursor/skills/.
+
+Installing the plugin does not install the skill.
+
+==============================================================================
+10. LICENSE                                                  *glinter-license*
+
+MIT. See the LICENSE file in the repository.
+
+Source and issues: https://github.com/vgraman0/glinter
+
+vim:tw=78:ts=8:noet:ft=help:norl:
