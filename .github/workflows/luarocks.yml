@@ -34,10 +34,9 @@ jobs:
         env:
           LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
         with:
+          # No version input: the action reads the tag and drops the v.
+          # Off a tag it builds 0.0.0 and never uploads.
           template: rockspec.template
-          # A tag names the release. Anything else is a build check, and
-          # github.ref_name would be a branch or a merge ref there.
-          version: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'scm' }}
           summary: Live highlighting for git commit messages in Neovim.
           detailed_description: |
             glinter highlights a commit message while you type it. Structure
