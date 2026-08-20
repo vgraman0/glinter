@@ -48,8 +48,8 @@ local PRIORITY = {
   S5 = 200,
 }
 
--- Pastel Hemingway backgrounds with a dark foreground so light theme
--- text does not wash out on yellow/red/blue spans.
+-- Pastel backgrounds with a dark foreground so light theme text does
+-- not wash out on yellow/red/blue spans.
 local INK = "#1b1b1b"
 local INK_CTERM = 232
 

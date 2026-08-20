@@ -5,7 +5,7 @@ local function lint(text)
   return rules.lint(text)
 end
 
-set_current("catalog-hemingway")
+set_current("catalog-english")
 local ids = { "H1", "H2", "H3", "H4", "H5", "H6" }
 for i = 1, #ids do
   is_true(catalog[ids[i]] ~= nil, "catalog has " .. ids[i])

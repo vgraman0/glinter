@@ -1,6 +1,6 @@
 ---
 name: glinter
-description: Write simple git commit messages (Chris Beams + Hemingway, no grade level). Use when committing, drafting COMMIT_EDITMSG, amending, squashing, or reviewing commit text. Neovim and bin/glinter are optional.
+description: Write simple git commit messages (Chris Beams + clear English). Use when committing, drafting COMMIT_EDITMSG, amending, squashing, or reviewing commit text. Neovim and bin/glinter are optional.
 ---
 
 # Glinter commit messages
@@ -42,7 +42,9 @@ A one-line commit is fine. Git-generated subjects (`Merge `, `Revert `,
 | S7 | Do not start with `WIP` |
 | C1 | Body explains **why**, not how. The diff already shows how |
 
-## Hemingway style (no grade level)
+## Clear English
+
+Prefer short, active, plain sentences. Do not score grade level.
 
 | ID | Color | Rule |
 | --- | --- | --- |

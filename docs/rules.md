@@ -52,10 +52,10 @@ Flag the first word when it is a common past-tense verb (`Fixed`, `Added`,
 `Don't` / `Do not` are imperative. Noun-phrase subjects (`Overflow fix`)
 may slip through.
 
-## Hemingway style (should-fix, no grade level)
+## Clear English (should-fix, no grade level)
 
-No ARI, Flesch–Kincaid, or overall score. Complexity is sentence length
-and weakeners.
+Prefer short, active, plain sentences. No ARI, Flesch–Kincaid, or overall
+score. Flag long sentences and weakeners.
 
 | ID  | Name                 | Check |
 | --- | -------------------- | ----- |
