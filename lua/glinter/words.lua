@@ -1,4 +1,4 @@
--- Closed word lists for Hemingway-style checks.
+-- Closed word lists for clear-English checks.
 -- Keys are lowercase ASCII. Not CS vocabulary.
 local function set(list)
   local t = {}

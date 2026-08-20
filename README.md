@@ -1,8 +1,9 @@
 # glinter
 
-Hemingway-style live highlighting for git commit messages in Neovim, plus
-the [Chris Beams](https://cbea.ms/git-commit/) structure rules. No grade
-level. No Conventional Commits.
+Live highlighting for git commit messages in Neovim. Structure follows
+[Chris Beams](https://cbea.ms/git-commit/). Prose follows clear English:
+short sentences, active voice, and plain words. No grade level. No
+Conventional Commits.
 
 While you type in `COMMIT_EDITMSG`, glinter paints the **message** lines
 only. Git comments and the verbose diff are left alone. The same rules
@@ -36,10 +37,11 @@ require("glinter").setup({
 })
 ```
 
-Colors are set by glinter, not your colorscheme: Hemingway pastels
-(yellow/red sentences, blue adverbs, green passive, purple simpler
-words) with a dark foreground so the text stays readable. Override
-the `Glinter*` highlight groups if you want them to follow a theme.
+Colors are set by glinter, not your colorscheme: yellow and red for
+long sentences, blue for adverbs and hedges, green for passive voice,
+purple for simpler words. A dark foreground keeps the text readable.
+Override the `Glinter*` highlight groups if you want them to follow a
+theme.
 
 Rest the cursor on a highlight (or press `K` / `:GlinterHover`) to see
 the rule id and the fix, for example `[H4] Use active voice`.
