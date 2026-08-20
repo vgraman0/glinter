@@ -1,0 +1,15 @@
+#!/usr/bin/env lua
+
+local function script_dir()
+  local src = debug.getinfo(1, "S").source
+  if src:sub(1, 1) == "@" then
+    src = src:sub(2)
+  end
+  return src:match("^(.*)/") or "."
+end
+
+local dir = script_dir()
+package.path = dir .. "/../?.lua;" .. dir .. "/../?/init.lua;" .. package.path
+
+local cli = require("glinter.cli")
+os.exit(cli.main(arg) or 0)
