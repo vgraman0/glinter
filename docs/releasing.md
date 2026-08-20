@@ -32,12 +32,33 @@ release, never a patch.
 `make release` checks the version, the changelog entry, and the tests
 before it writes the tag. It does not push.
 
+## LuaRocks, once
+
+The `luarocks` workflow uploads a rock for every `v*` tag. It needs an API
+key, and it skips the upload with a notice until the key is there:
+
+1. Register at [luarocks.org](https://luarocks.org), and confirm that the
+   name `glinter` is free.
+2. Make a key at <https://luarocks.org/settings/api-keys>.
+3. Add it to the repository as the `LUAROCKS_API_KEY` secret, under
+   Settings, Secrets and variables, Actions.
+
+`rockspec.template` holds the rockspec. The action fills in the tag, the
+description, and the labels. `tests/rockspec_spec.lua` renders the same
+template and checks it, so `make test` catches a typo before a tag does.
+
+To change what the rock ships, edit `rockspec.template` for the layout and
+`.github/workflows/luarocks.yml` for the metadata.
+
 ## What the workflow does
 
 `.github/workflows/release.yml` runs on any `v*` tag. It fails the release
 if the tag and `lua/glinter/version.lua` disagree, or if `CHANGELOG.md` has
 no entry for the version. Otherwise it runs the tests and publishes the
 GitHub Release with that entry as the notes.
+
+`.github/workflows/luarocks.yml` runs on the same tag and uploads the rock.
+A pull request builds and installs the rock without uploading it.
 
 ## Fixing a bad tag
 

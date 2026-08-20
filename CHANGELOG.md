@@ -31,6 +31,8 @@ First tagged release.
   in a push or a pull request.
 - A Cursor skill and rule that carry the same rule tables.
 - `install-nvim` for people who do not use a plugin manager.
+- A rock on luarocks.org for every tag, so `rocks.nvim` and
+  `luarocks install glinter` both work.
 
 [Unreleased]: https://github.com/vgraman0/glinter/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/vgraman0/glinter/releases/tag/v0.1.0

@@ -1,0 +1,56 @@
+name: luarocks
+
+# Publishes a rock to luarocks.org for every v* tag, so `rocks.nvim` users
+# and `luarocks install glinter` both work. Needs the LUAROCKS_API_KEY
+# secret; without it the job says so and skips. See docs/releasing.md.
+on:
+  push:
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Say why the upload is skipped
+        if: env.LUAROCKS_API_KEY == ''
+        run: |
+          echo "::notice::LUAROCKS_API_KEY is not set, so this job did nothing." \
+            "Add the secret to publish to luarocks.org. See docs/releasing.md."
+
+      # On a pull request the action builds and installs the rock without
+      # uploading it, which checks the rockspec before a tag depends on it.
+      - name: Build and upload the rock
+        if: env.LUAROCKS_API_KEY != ''
+        uses: lumen-oss/luarocks-tag-release@v7
+        env:
+          LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
+        with:
+          template: rockspec.template
+          summary: Live highlighting for git commit messages in Neovim.
+          detailed_description: |
+            glinter highlights a commit message while you type it. Structure
+            follows Chris Beams. Prose follows clear English: short
+            sentences, active voice, and plain words. No Conventional
+            Commits.
+
+            It ships a Neovim plugin, a `glinter` command for files, stdin,
+            or a commit range, and a commit-msg hook.
+          labels: |
+            neovim
+            git
+            commit
+            linter
+          dependencies: |
+            lua >= 5.1
+          copy_directories: |
+            doc
+            plugin
+          fail_on_duplicate: true

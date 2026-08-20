@@ -95,6 +95,20 @@ vim.pack.add({
 })
 ```
 
+### LuaRocks
+
+With [rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim):
+
+```
+:Rocks install glinter
+```
+
+The rock also puts the `glinter` command on your PATH:
+
+```sh
+luarocks install glinter
+```
+
 ## Agent skill only
 
 Copy [`.cursor/skills/glinter/SKILL.md`](.cursor/skills/glinter/SKILL.md)
@@ -121,7 +135,8 @@ bin/glinter --range origin/main..HEAD
 bin/glinter --version
 ```
 
-Needs Lua 5.1+ or Neovim. In a clone of this repository:
+Needs Lua 5.1+ or Neovim. `luarocks install glinter` gives you the same
+command without a clone. In a clone of this repository:
 
 ```
 make hooks    # git config core.hooksPath .githooks
