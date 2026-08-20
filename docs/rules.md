@@ -48,8 +48,27 @@ Flag the first word when it is a common past-tense verb (`Fixed`, `Added`,
 `Don't` / `Do not` are imperative. Noun-phrase subjects (`Overflow fix`)
 may slip through.
 
+## Hemingway style (should-fix, no grade level)
+
+No ARI, Flesch–Kincaid, or overall score. Complexity is sentence length
+and weakeners.
+
+| ID  | Name                 | Check |
+| --- | -------------------- | ----- |
+| H1  | sentence-hard        | Sentence is more than 20 words (yellow). |
+| H2  | sentence-very-hard   | Sentence is more than 30 words (red). H2 replaces H1. |
+| H3  | adverb               | Manner adverbs and intensifiers (blue). |
+| H4  | passive              | Be-verb plus past participle (green). |
+| H5  | qualifier            | Hedges such as `maybe`, `I think` (blue). |
+| H6  | simpler-word         | Closed list of weasel words with a simpler synonym (purple). |
+
+The subject is one sentence even without a period. Apply H* to subject
+and body prose only, not comments, diffs, trailers, or URL lines.
+
 ## Out of scope
 
+- Readability grade / ARI / Flesch–Kincaid
+- Grammar, spelling, punctuation
 - Conventional Commit types (`feat:`, `fix:`)
 - Atomic-commit / squash policy
 - Highlighting the verbose diff

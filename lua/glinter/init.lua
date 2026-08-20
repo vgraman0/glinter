@@ -6,5 +6,6 @@ M.parse = parse.classify
 M.lint = require("glinter.rules").lint
 M.rules = require("glinter.rules")
 M.catalog = require("glinter.catalog")
+M.words = require("glinter.words")
 
 return M

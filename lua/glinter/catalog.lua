@@ -10,6 +10,12 @@ local M = {
   S7 = { name = "subject-wip", severity = "warning" },
   B1 = { name = "body-wrap", severity = "error" },
   C1 = { name = "why-not-how", severity = "warning" },
+  H1 = { name = "sentence-hard", severity = "warning" },
+  H2 = { name = "sentence-very-hard", severity = "warning" },
+  H3 = { name = "adverb", severity = "warning" },
+  H4 = { name = "passive", severity = "warning" },
+  H5 = { name = "qualifier", severity = "warning" },
+  H6 = { name = "simpler-word", severity = "warning" },
 }
 
 return M
