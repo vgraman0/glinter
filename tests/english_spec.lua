@@ -32,8 +32,11 @@ end
 set_current("H3")
 is_true(has_rule(lint("Fix the really bad wrap\n"), "H3"), "really")
 is_true(has_rule(lint("Fix the quickly broken wrap\n"), "H3"), "-ly adverb")
+is_true(has_rule(lint("Fix the briefly broken wrap\n"), "H3"), "briefly is an adverb")
 is_true(has_no_rule(lint("Fix only the parser\n"), "H3"), "only is allowed")
 is_true(has_no_rule(lint("Apply the patch\n"), "H3"), "apply is not an adverb")
+is_true(has_no_rule(lint("Add Dragonfly cache\n"), "H3"), "dragonfly is not an adverb")
+is_true(has_no_rule(lint("Fix the butterfly parser\n"), "H3"), "butterfly is not an adverb")
 is_true(has_rule(lint("Fix too large buffers\n"), "H3"), "too + adjective")
 
 set_current("H4")
