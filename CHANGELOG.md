@@ -10,11 +10,7 @@ release. Breaking changes always show up here.
 
 ## [Unreleased]
 
-### Removed
-
-- `install-nvim`. Clone into Neovim's packpath instead.
-
-## [0.1.0] - 2026-08-20
+## [0.1.0] - 2026-08-21
 
 First tagged release.
 
@@ -33,8 +29,7 @@ First tagged release.
 - `glinter --version`, and `require("glinter").version` in Lua.
 - A `commit-msg` hook in `.githooks` and a CI job that lints the commits
   in a push or a pull request.
-- A Cursor skill and rule that carry the same rule tables.
-- `install-nvim` for people who do not use a plugin manager.
+- A Cursor skill (`SKILL.md`) and rule that carry the same rule tables.
 - A rock on luarocks.org for every tag, so `rocks.nvim` and
   `luarocks install glinter` both work.
 - `:help glinter`, covering install, options, commands, highlight groups,
