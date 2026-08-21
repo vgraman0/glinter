@@ -6,10 +6,11 @@ local function lint(text)
 end
 
 set_current("catalog-cbeams")
-local ids = { "S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "B1", "C1" }
+local ids = { "S0", "S1", "S3", "S4", "S5", "S6", "S7", "B1", "C1" }
 for i = 1, #ids do
   is_true(catalog[ids[i]] ~= nil, "catalog has " .. ids[i])
 end
+is_true(catalog.S2 == nil, "S2 is removed")
 
 set_current("cbeams-clean")
 do
@@ -47,19 +48,13 @@ do
   is_true(has_no_rule(lint("Fix the thing\n\nExplain why it broke.\n"), "S1"), "blank is ok")
 end
 
-set_current("S2/S3")
+set_current("S3")
 do
-  local soft = "Fix " .. string.rep("x", 50)
-  local diags = lint(soft .. "\n")
-  local d = has_rule(diags, "S2")
-  is_true(d, "soft overflow")
-  if d then
-    eq(d.col, 50, "S2 starts at column 51")
-    is_true(has_no_rule(diags, "S3"), "54 chars is not hard overflow")
-  end
+  local mid = "Fix " .. string.rep("x", 50)
+  local diags = lint(mid .. "\n")
+  is_true(has_no_rule(diags, "S3"), "54 chars is not hard overflow")
   local hard = "Fix " .. string.rep("y", 80)
   local h = lint(hard .. "\n")
-  is_true(has_rule(h, "S2"), "hard also has S2")
   local s3 = has_rule(h, "S3")
   is_true(s3, "hard overflow")
   if s3 then
@@ -108,11 +103,14 @@ is_true(has_no_rule(lint("Fix wrap\n\nUpdated the parser because it crashed.\n")
 set_current("live-coords")
 do
   local util = require("glinter.util")
-  local padded = "Fix " .. string.rep("a", 47)
-  eq(util.char_len(padded), 51, "51 chars")
-  local d = has_rule(lint(padded), "S2")
-  is_true(d, "51st char warns")
+  local padded = "Fix " .. string.rep("a", 69)
+  eq(util.char_len(padded), 73, "73 chars")
+  local d = has_rule(lint(padded), "S3")
+  is_true(d, "73rd char errors")
   if d then
-    eq(d.col, 50, "highlight from 0-based col 50")
+    eq(d.col, 72, "highlight from 0-based col 72")
   end
+  local soft = "Fix " .. string.rep("a", 47)
+  eq(util.char_len(soft), 51, "51 chars")
+  is_true(has_no_rule(lint(soft), "S3"), "51 chars is under the hard limit")
 end

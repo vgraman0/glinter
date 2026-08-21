@@ -159,7 +159,6 @@ exempt.
 
 | ID  | Name                 | Check |
 | --- | -------------------- | ----- |
-| S2  | subject-soft-length  | Subject is at most 50 characters. Highlight columns 51–72. |
 | S6  | subject-imperative   | Completes *If applied, this commit will \<subject\>*. |
 | S7  | subject-wip          | Subject does not start with `WIP`. |
 | C1  | why-not-how          | Body explains why, not how. Weak machine check. |
@@ -206,7 +205,7 @@ change defaults:
 ```lua
 require("glinter").setup({
   debounce_ms = 40,
-  colorcolumn = true, -- 51 and 73
+  colorcolumn = true, -- 73
   hover_ms = 300, -- delay before the recommendation float
 })
 ```
@@ -225,7 +224,6 @@ you want them to follow a theme.
 | `GlinterQualifier` | blue | H5 |
 | `GlinterPassive` | green | H4 |
 | `GlinterComplex` | purple | H6 |
-| `GlinterSubjectSoft` | yellow | S2 |
 | `GlinterSubjectHard` | red | S3, B1 |
 | `GlinterError` | red | S0, S1, S4, S5 |
 | `GlinterWarning` | yellow | S6, S7, C1 |

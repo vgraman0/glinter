@@ -48,20 +48,28 @@ end
 check(hit_subject, "subject has highlights")
 check(not hit_comment, "comments and later lines have no highlights")
 
--- Insert-mode style edit: crossing 50 characters must highlight.
+-- Insert-mode style edit: crossing 50 characters must not highlight.
 vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
   "Fix " .. string.rep("a", 47),
 })
 require("glinter.highlight").refresh(buf)
 marks = vim.api.nvim_buf_get_extmarks(buf, ns, 0, -1, { details = true })
-local found_s2 = false
+check(#marks == 0, "51-character subject has no highlights")
+
+-- Crossing 72 characters must highlight.
+vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
+  "Fix " .. string.rep("a", 69),
+})
+require("glinter.highlight").refresh(buf)
+marks = vim.api.nvim_buf_get_extmarks(buf, ns, 0, -1, { details = true })
+local found_s3 = false
 for i = 1, #marks do
   local m = marks[i]
-  if m[2] == 0 and m[3] == 50 then
-    found_s2 = true
+  if m[2] == 0 and m[3] == 72 then
+    found_s3 = true
   end
 end
-check(found_s2, "51st character highlighted at col 50")
+check(found_s3, "73rd character highlighted at col 72")
 
 local hard = vim.api.nvim_get_hl(0, { name = "GlinterHard" })
 check(hard.fg ~= nil, "GlinterHard sets a foreground")

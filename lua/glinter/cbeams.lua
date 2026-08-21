@@ -5,7 +5,6 @@ local words = require("glinter.cbeams_words")
 
 local M = {}
 
-local SUBJECT_SOFT = 50
 local SUBJECT_HARD = 72
 local BODY_WRAP = 72
 
@@ -98,46 +97,22 @@ local function add_s1(out, parsed)
   end
 end
 
-local function add_s2_s3(out, parsed)
+local function add_s3(out, parsed)
   if parsed.generated or not parsed.subject then
     return
   end
   local text = parsed.subject.text
   local n = util.char_len(text)
-  local lnum = parsed.subject.lnum
   if n > SUBJECT_HARD then
-    local soft = util.char_to_byte(text, SUBJECT_SOFT)
     local hard = util.char_to_byte(text, SUBJECT_HARD)
-    out[#out + 1] = diag.make("S2", {
-      lnum = lnum,
-      col = soft,
-      end_col = hard,
-      message = string.format(
-        "Subject is %d characters; keep it to %d",
-        n,
-        SUBJECT_SOFT
-      ),
-    })
     out[#out + 1] = diag.make("S3", {
-      lnum = lnum,
+      lnum = parsed.subject.lnum,
       col = hard,
       end_col = #text,
       message = string.format(
         "Subject is %d characters; keep it to %d",
         n,
         SUBJECT_HARD
-      ),
-    })
-  elseif n > SUBJECT_SOFT then
-    local soft = util.char_to_byte(text, SUBJECT_SOFT)
-    out[#out + 1] = diag.make("S2", {
-      lnum = lnum,
-      col = soft,
-      end_col = #text,
-      message = string.format(
-        "Subject is %d characters; keep it to %d",
-        n,
-        SUBJECT_SOFT
       ),
     })
   end
@@ -288,7 +263,7 @@ end
 function M.apply(out, parsed)
   add_s0(out, parsed)
   add_s1(out, parsed)
-  add_s2_s3(out, parsed)
+  add_s3(out, parsed)
   add_s4(out, parsed)
   add_s5(out, parsed)
   add_s6(out, parsed)
@@ -297,7 +272,6 @@ function M.apply(out, parsed)
   add_c1(out, parsed)
 end
 
-M.SUBJECT_SOFT = SUBJECT_SOFT
 M.SUBJECT_HARD = SUBJECT_HARD
 M.BODY_WRAP = BODY_WRAP
 

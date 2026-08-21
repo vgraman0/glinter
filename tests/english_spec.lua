@@ -92,7 +92,7 @@ do
     "Fix overflow on long commit subjects",
     "",
     "Subjects longer than 72 characters break git log and GitHub.",
-    "Cap the hard limit and warn at 50 so the line stays a summary.",
+    "Cap the hard limit at 72 so the line stays a summary.",
   }, "\n")
   eq(#lint(text), 0, "plan pass example is clean")
 end

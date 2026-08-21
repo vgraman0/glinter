@@ -2,7 +2,6 @@
 local M = {
   S0 = { name = "subject-empty", severity = "error" },
   S1 = { name = "subject-blank-line", severity = "error" },
-  S2 = { name = "subject-soft-length", severity = "warning" },
   S3 = { name = "subject-hard-length", severity = "error" },
   S4 = { name = "subject-capitalize", severity = "error" },
   S5 = { name = "subject-no-period", severity = "error" },

@@ -10,6 +10,11 @@ release. Breaking changes always show up here.
 
 ## [Unreleased]
 
+### Removed
+
+- S2 (`subject-soft-length`): the 50-character subject warning. Subjects
+  may run to 72 characters. The color column is 73 only.
+
 ## [0.1.0] - 2026-08-21
 
 First tagged release.
