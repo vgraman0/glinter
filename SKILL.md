@@ -55,7 +55,8 @@ Prefer short, active, plain sentences. Do not score grade level.
 | H6 | purple | Weasel word with a simpler synonym |
 
 `-ly` allowlist (do not flag): only, early, likely, daily, weekly, monthly,
-yearly, family, apply, supply, reply, ally, assembly, fly.
+yearly, family, apply, supply, reply, ally, assembly, fly, firefly,
+dragonfly, butterfly.
 
 Simpler words: utilize→use, leverage→use, facilitate→help, commence→start,
 subsequently→then, therefore→so, additional→more, attempt→try, obtain→get,
