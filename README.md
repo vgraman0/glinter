@@ -185,8 +185,6 @@ Prefer short, active, plain sentences. Do not score grade level.
 | H5  | qualifier            | Hedges such as `maybe`, `I think` (blue). |
 | H6  | simpler-word         | Closed list of weasel words with a simpler synonym (purple). |
 
-Full catalog: [docs/rules.md](docs/rules.md).
-
 ## CLI and hook
 
 Optional enforcement, used in this repository:
