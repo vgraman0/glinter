@@ -1,3 +1,6 @@
+# Local Cursor config
+.cursor/
+
 # Compiled Lua sources
 luac.out
 

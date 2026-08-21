@@ -58,11 +58,9 @@ With vim.pack (Neovim 0.12 and later): >lua
 With rocks.nvim: >vim
     :Rocks install glinter
 <
-Without a plugin manager, clone the repository and run the installer. It
-links the clone into Neovim's built-in plugin folder: >bash
-    git clone https://github.com/vgraman0/glinter
-    cd glinter
-    ./install-nvim
+Without a plugin manager, clone into Neovim's built-in plugin folder: >bash
+    git clone https://github.com/vgraman0/glinter \
+      ~/.local/share/nvim/site/pack/glinter/start/glinter
 <
 Then point git at Neovim: >bash
     git config --global core.editor nvim
@@ -202,8 +200,8 @@ rejects a commit that fails a rule.
 9. AGENT SKILL                                                 *glinter-skill*
 
 The rule tables also ship as an agent skill, so a coding agent writes
-commit messages the same way. Copy .cursor/skills/glinter/SKILL.md from
-the repository into your own project, or into ~/.cursor/skills/.
+commit messages the same way. Copy SKILL.md from the repository into
+your own project, or into ~/.cursor/skills/glinter/.
 
 Installing the plugin does not install the skill.
 

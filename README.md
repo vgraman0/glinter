@@ -1,30 +1,136 @@
 # glinter
 
-Live highlighting for git commit messages in Neovim. Structure follows
-[Chris Beams](https://cbea.ms/git-commit/). Prose follows clear English:
-short sentences, active voice, and plain words. No grade level. No
-Conventional Commits.
+[![CI](https://github.com/vgraman0/glinter/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vgraman0/glinter/actions/workflows/ci.yml)
+
+Live highlighting for git commit messages in Neovim.
 
 While you type in `COMMIT_EDITMSG`, glinter paints the **message** lines
 only. Git comments and the verbose diff are left alone. The same rules
-are in a Cursor skill, a `commit-msg` hook, and CI.
+run in a `commit-msg` hook and CI.
 
-Use Neovim, the agent skill, the CLI, or any mix. None of them requires
-the others.
+Use Neovim, the CLI, or both. Neither requires the other.
 
-## Neovim, first time
+## Requirements
 
-Install [Neovim](https://neovim.io) (`nvim --version`). You do not need
-a plugin manager, an `init.lua`, or any Lua.
+- Neovim 0.7 or newer
+- Git
+- Lua 5.1+ only if you want the CLI without Neovim
 
-```sh
-git clone https://github.com/vgraman0/glinter
-cd glinter
-./install-nvim
+## Installation
+
+<details>
+  <summary>lazy.nvim</summary>
+
+```lua
+{
+  "vgraman0/glinter",
+  ft = "gitcommit",
+  version = "*", -- latest release; drop this line to track main
+}
 ```
 
-That links this clone into Neovim's built-in plugin folder. Keep the
-clone; update with `git pull` and restart Neovim.
+</details>
+
+<details>
+  <summary>Packer</summary>
+
+```lua
+use {
+  "vgraman0/glinter",
+  ft = "gitcommit",
+}
+```
+
+</details>
+
+<details>
+  <summary>Paq</summary>
+
+```lua
+require("paq") {
+  "vgraman0/glinter",
+}
+```
+
+</details>
+
+<details>
+  <summary>vim-plug</summary>
+
+```vim
+Plug 'vgraman0/glinter'
+```
+
+</details>
+
+<details>
+  <summary>dein</summary>
+
+```vim
+call dein#add('vgraman0/glinter')
+```
+
+</details>
+
+<details>
+  <summary>vim.pack (Neovim 0.12+)</summary>
+
+```lua
+vim.pack.add({
+  { src = "https://github.com/vgraman0/glinter", version = vim.version.range("*") },
+})
+```
+
+</details>
+
+<details>
+  <summary>rocks.nvim / LuaRocks</summary>
+
+```
+:Rocks install glinter
+```
+
+The rock also puts the `glinter` command on your PATH:
+
+```sh
+luarocks install glinter
+```
+
+</details>
+
+<details>
+  <summary>Pathogen</summary>
+
+```sh
+git clone https://github.com/vgraman0/glinter ~/.vim/bundle/glinter
+```
+
+</details>
+
+<details>
+  <summary>Neovim native package</summary>
+
+Install [Neovim](https://neovim.io) (`nvim --version`). You do not need
+a plugin manager, an `init.lua`, or any Lua. Clone into Neovim's
+built-in plugin folder:
+
+```sh
+git clone https://github.com/vgraman0/glinter \
+  ~/.local/share/nvim/site/pack/glinter/start/glinter
+```
+
+Windows (PowerShell):
+
+```powershell
+git clone https://github.com/vgraman0/glinter $env:LOCALAPPDATA\nvim-data\site\pack\glinter\start\glinter
+```
+
+Keep the clone; update with `git pull` and restart Neovim. Only `lua/`
+and `plugin/` load.
+
+</details>
+
+## Quick Start
 
 Point git at Neovim, then commit as usual:
 
@@ -33,24 +139,16 @@ git config --global core.editor nvim
 git commit
 ```
 
-While you type, glinter paints the **message** lines. Git comments and
-the verbose diff stay as they are. Quit Neovim with `:q`.
+Rest the cursor on a highlight (or press `K` / `:GlinterHover`) to see
+the rule id and the fix, for example `[H4] Use active voice`.
 
-See a sample without committing:
+Full docs in Neovim: `:help glinter`.
 
-```sh
-./install-nvim --try
-```
-
-Windows (PowerShell), skip the script and clone into Neovim's plugin
-folder:
-
-```powershell
-git clone https://github.com/vgraman0/glinter $env:LOCALAPPDATA\nvim-data\site\pack\glinter\start\glinter
-```
-
-You do not need the Cursor skill, the CLI, or a git hook. Only `lua/`
-and `plugin/` load.
+Colors are set by glinter, not your colorscheme: yellow and red for
+long sentences, blue for adverbs and hedges, green for passive voice,
+purple for simpler words. A dark foreground keeps the text readable.
+Override the `Glinter*` highlight groups if you want them to follow a
+theme.
 
 The plugin attaches on `FileType gitcommit` and refreshes on
 `TextChanged` / `TextChangedI`. Skip the next block unless you want
@@ -64,67 +162,47 @@ require("glinter").setup({
 })
 ```
 
-Colors are set by glinter, not your colorscheme: yellow and red for
-long sentences, blue for adverbs and hedges, green for passive voice,
-purple for simpler words. A dark foreground keeps the text readable.
-Override the `Glinter*` highlight groups if you want them to follow a
-theme.
+## Rules
 
-Rest the cursor on a highlight (or press `K` / `:GlinterHover`) to see
-the rule id and the fix, for example `[H4] Use active voice`.
+Git tooling and [How to Write a Git Commit Message](https://cbea.ms/git-commit/).
+One-line commits are valid. A body is not required. Git-generated
+subjects (`Merge `, `Revert `, `fixup! `, `squash! `, `amend! `) are
+exempt.
 
-Full docs in Neovim: `:help glinter`.
+### Chris Beams structure (must-fix)
 
-A plugin install does not copy the Cursor skill into your project.
+| ID  | Name                 | Check |
+| --- | -------------------- | ----- |
+| S0  | subject-empty        | Subject is non-empty after comments are ignored. |
+| S1  | subject-blank-line   | If a body exists, a blank line separates it from the subject. |
+| S3  | subject-hard-length  | Subject is at most 72 characters. Highlight column 73+. |
+| S4  | subject-capitalize   | Subject starts with uppercase `A–Z` (UTF-8 letters pass). Leading space fails. |
+| S5  | subject-no-period    | Subject does not end with `.`, `!`, or `?`. Interior periods (`U.S.`) are fine. |
+| B1  | body-wrap            | Body lines wrap at 72 characters. Exempt: trailers, lines that are a single URL. |
 
-### Already using a plugin manager?
+### Chris Beams mood and content (should-fix)
 
-Skip `./install-nvim`. lazy.nvim:
+| ID  | Name                 | Check |
+| --- | -------------------- | ----- |
+| S2  | subject-soft-length  | Subject is at most 50 characters. Highlight columns 51–72. |
+| S6  | subject-imperative   | Completes *If applied, this commit will \<subject\>*. |
+| S7  | subject-wip          | Subject does not start with `WIP`. |
+| C1  | why-not-how          | Body explains why, not how. Weak machine check. |
 
-```lua
-{
-  "vgraman0/glinter",
-  ft = "gitcommit",
-  version = "*", -- latest release; drop this line to track main
-}
-```
+### Clear English (should-fix)
 
-Neovim 0.12 (`vim.pack`):
+Prefer short, active, plain sentences. Do not score grade level.
 
-```lua
-vim.pack.add({
-  { src = "https://github.com/vgraman0/glinter", version = vim.version.range("*") },
-})
-```
+| ID  | Name                 | Check |
+| --- | -------------------- | ----- |
+| H1  | sentence-hard        | Sentence is more than 20 words (yellow). |
+| H2  | sentence-very-hard   | Sentence is more than 30 words (red). H2 replaces H1. |
+| H3  | adverb               | Manner adverbs and intensifiers (blue). |
+| H4  | passive              | Be-verb plus past participle (green). |
+| H5  | qualifier            | Hedges such as `maybe`, `I think` (blue). |
+| H6  | simpler-word         | Closed list of weasel words with a simpler synonym (purple). |
 
-### LuaRocks
-
-With [rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim):
-
-```
-:Rocks install glinter
-```
-
-The rock also puts the `glinter` command on your PATH:
-
-```sh
-luarocks install glinter
-```
-
-## Agent skill only
-
-Copy [`.cursor/skills/glinter/SKILL.md`](.cursor/skills/glinter/SKILL.md)
-to one of:
-
-- this project: `.cursor/skills/glinter/SKILL.md`
-- every project: `~/.cursor/skills/glinter/SKILL.md`
-
-The skill is the rule tables. Cursor does not need Neovim, `bin/glinter`,
-or this repository on disk after the copy.
-
-Optional: copy [`.cursor/rules/glinter.mdc`](.cursor/rules/glinter.mdc)
-so the skill always applies when committing. That rule file tells the
-agent to run `bin/glinter` only when the binary exists.
+Full catalog: [docs/rules.md](docs/rules.md) or `:help glinter-rules`.
 
 ## CLI and hook
 
@@ -145,21 +223,15 @@ make hooks    # git config core.hooksPath .githooks
 make test
 ```
 
-The hook fails on errors and warnings. You can use the CLI without
-Neovim or Cursor.
-
-## Rules
-
-See [docs/rules.md](docs/rules.md),
-[`.cursor/skills/glinter/SKILL.md`](.cursor/skills/glinter/SKILL.md), or
-`:help glinter-rules`.
+The hook fails on errors and warnings.
 
 ## Releases
 
 Releases are tags of the form `vMAJOR.MINOR.PATCH`. Read
 [CHANGELOG.md](CHANGELOG.md) for what each one changed, and
-[docs/releasing.md](docs/releasing.md) for how to cut one. `bin/glinter
---version` and `require("glinter").version` print the version you have.
+[docs/releasing.md](docs/releasing.md) for how to cut one.
+`bin/glinter --version` and `require("glinter").version` print the
+version you have.
 
 Version 0.x means the Lua API and the rule ids can still change in a
 minor release.
