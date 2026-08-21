@@ -10,6 +10,10 @@ release. Breaking changes always show up here.
 
 ## [Unreleased]
 
+### Fixed
+
+- H3 no longer treats `Dragonfly` as an adverb.
+
 ## [0.1.0] - 2026-08-21
 
 First tagged release.
