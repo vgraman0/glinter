@@ -10,6 +10,16 @@ run in a `commit-msg` hook and CI.
 
 Use Neovim, the CLI, or both. Neither requires the other.
 
+## Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Rules](#rules)
+- [CLI and hook](#cli-and-hook)
+- [Options](#options)
+- [Releases](#releases)
+
 ## Requirements
 
 - Neovim 0.7 or newer
@@ -127,24 +137,6 @@ git commit
 Rest the cursor on a highlight (or press `K` / `:GlinterHover`) to see
 the rule id and the fix, for example `[H4] Use active voice`.
 
-Colors are set by glinter, not your colorscheme: yellow and red for
-long sentences, blue for adverbs and hedges, green for passive voice,
-purple for simpler words. A dark foreground keeps the text readable.
-Override the `Glinter*` highlight groups if you want them to follow a
-theme.
-
-The plugin attaches on `FileType gitcommit` and refreshes on
-`TextChanged` / `TextChangedI`. Skip the next block unless you want
-to change defaults:
-
-```lua
-require("glinter").setup({
-  debounce_ms = 40,
-  colorcolumn = true, -- 51 and 73
-  hover_ms = 300, -- delay before the recommendation float
-})
-```
-
 ## Rules
 
 Git tooling and [How to Write a Git Commit Message](https://cbea.ms/git-commit/).
@@ -204,6 +196,44 @@ make test
 ```
 
 The hook fails on errors and warnings.
+
+## Options
+
+The plugin attaches on `FileType gitcommit` and refreshes on
+`TextChanged` / `TextChangedI`. Call `setup` only if you want to
+change defaults:
+
+```lua
+require("glinter").setup({
+  debounce_ms = 40,
+  colorcolumn = true, -- 51 and 73
+  hover_ms = 300, -- delay before the recommendation float
+})
+```
+
+### Colors
+
+Colors are set by glinter, not your colorscheme. A dark foreground
+keeps the text readable. Override the `Glinter*` highlight groups if
+you want them to follow a theme.
+
+| Group | Color | Rules |
+| --- | --- | --- |
+| `GlinterHard` | yellow | H1 (sentence > 20 words) |
+| `GlinterVeryHard` | red | H2 (sentence > 30 words) |
+| `GlinterAdverb` | blue | H3 |
+| `GlinterQualifier` | blue | H5 |
+| `GlinterPassive` | green | H4 |
+| `GlinterComplex` | purple | H6 |
+| `GlinterSubjectSoft` | yellow | S2 |
+| `GlinterSubjectHard` | red | S3, B1 |
+| `GlinterError` | red | S0, S1, S4, S5 |
+| `GlinterWarning` | yellow | S6, S7, C1 |
+| `GlinterReplacement` | purple italic | simpler-word hint at end of line |
+
+```lua
+vim.api.nvim_set_hl(0, "GlinterHard", { link = "WarningMsg" })
+```
 
 ## Releases
 
