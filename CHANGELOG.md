@@ -10,6 +10,10 @@ release. Breaking changes always show up here.
 
 ## [Unreleased]
 
+### Removed
+
+- `install-nvim`. Clone into Neovim's packpath instead.
+
 ## [0.1.0] - 2026-08-20
 
 First tagged release.

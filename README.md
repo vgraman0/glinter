@@ -96,30 +96,22 @@ git clone https://github.com/vgraman0/glinter ~/.vim/bundle/glinter
   <summary>Neovim native package</summary>
 
 Install [Neovim](https://neovim.io) (`nvim --version`). You do not need
-a plugin manager, an `init.lua`, or any Lua.
+a plugin manager, an `init.lua`, or any Lua. Clone into Neovim's
+built-in plugin folder:
 
 ```sh
-git clone https://github.com/vgraman0/glinter
-cd glinter
-./install-nvim
+git clone https://github.com/vgraman0/glinter \
+  ~/.local/share/nvim/site/pack/glinter/start/glinter
 ```
 
-That links this clone into Neovim's built-in plugin folder. Keep the
-clone; update with `git pull` and restart Neovim. Only `lua/` and
-`plugin/` load.
-
-See a sample without committing:
-
-```sh
-./install-nvim --try
-```
-
-Windows (PowerShell), skip the script and clone into Neovim's plugin
-folder:
+Windows (PowerShell):
 
 ```powershell
 git clone https://github.com/vgraman0/glinter $env:LOCALAPPDATA\nvim-data\site\pack\glinter\start\glinter
 ```
+
+Keep the clone; update with `git pull` and restart Neovim. Only `lua/`
+and `plugin/` load.
 
 </details>
 
