@@ -84,6 +84,6 @@ framework so that highlighting can basically be applied in a way that is
 very easily understood by users who might perhaps want to leverage it.
 ```
 
-Full catalog: [docs/rules.md](docs/rules.md) when this file lives in the
+Full catalog: [README.md](README.md) when this file lives in the
 glinter repository. The tables above are enough if you copied only the
 skill.

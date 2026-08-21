@@ -10,6 +10,16 @@ run in a `commit-msg` hook and CI.
 
 Use Neovim, the CLI, or both. Neither requires the other.
 
+## Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Rules](#rules)
+- [CLI and hook](#cli-and-hook)
+- [Options](#options)
+- [Releases](#releases)
+
 ## Requirements
 
 - Neovim 0.7 or newer
@@ -84,21 +94,6 @@ vim.pack.add({
 </details>
 
 <details>
-  <summary>rocks.nvim / LuaRocks</summary>
-
-```
-:Rocks install glinter
-```
-
-The rock also puts the `glinter` command on your PATH:
-
-```sh
-luarocks install glinter
-```
-
-</details>
-
-<details>
   <summary>Pathogen</summary>
 
 ```sh
@@ -144,24 +139,6 @@ the rule id and the fix, for example `[H4] Use active voice`.
 
 Full docs in Neovim: `:help glinter`.
 
-Colors are set by glinter, not your colorscheme: yellow and red for
-long sentences, blue for adverbs and hedges, green for passive voice,
-purple for simpler words. A dark foreground keeps the text readable.
-Override the `Glinter*` highlight groups if you want them to follow a
-theme.
-
-The plugin attaches on `FileType gitcommit` and refreshes on
-`TextChanged` / `TextChangedI`. Skip the next block unless you want
-to change defaults:
-
-```lua
-require("glinter").setup({
-  debounce_ms = 40,
-  colorcolumn = true, -- 51 and 73
-  hover_ms = 300, -- delay before the recommendation float
-})
-```
-
 ## Rules
 
 Git tooling and [How to Write a Git Commit Message](https://cbea.ms/git-commit/).
@@ -202,7 +179,7 @@ Prefer short, active, plain sentences. Do not score grade level.
 | H5  | qualifier            | Hedges such as `maybe`, `I think` (blue). |
 | H6  | simpler-word         | Closed list of weasel words with a simpler synonym (purple). |
 
-Full catalog: [docs/rules.md](docs/rules.md) or `:help glinter-rules`.
+Each rule, with its heuristic, is also in `:help glinter-rules`.
 
 ## CLI and hook
 
@@ -215,8 +192,7 @@ bin/glinter --range origin/main..HEAD
 bin/glinter --version
 ```
 
-Needs Lua 5.1+ or Neovim. `luarocks install glinter` gives you the same
-command without a clone. In a clone of this repository:
+Needs Lua 5.1+ or Neovim. In a clone of this repository:
 
 ```
 make hooks    # git config core.hooksPath .githooks
@@ -224,6 +200,44 @@ make test
 ```
 
 The hook fails on errors and warnings.
+
+## Options
+
+The plugin attaches on `FileType gitcommit` and refreshes on
+`TextChanged` / `TextChangedI`. Call `setup` only if you want to
+change defaults:
+
+```lua
+require("glinter").setup({
+  debounce_ms = 40,
+  colorcolumn = true, -- 51 and 73
+  hover_ms = 300, -- delay before the recommendation float
+})
+```
+
+### Colors
+
+Colors are set by glinter, not your colorscheme. A dark foreground
+keeps the text readable. Override the `Glinter*` highlight groups if
+you want them to follow a theme.
+
+| Group | Color | Rules |
+| --- | --- | --- |
+| `GlinterHard` | yellow | H1 (sentence > 20 words) |
+| `GlinterVeryHard` | red | H2 (sentence > 30 words) |
+| `GlinterAdverb` | blue | H3 |
+| `GlinterQualifier` | blue | H5 |
+| `GlinterPassive` | green | H4 |
+| `GlinterComplex` | purple | H6 |
+| `GlinterSubjectSoft` | yellow | S2 |
+| `GlinterSubjectHard` | red | S3, B1 |
+| `GlinterError` | red | S0, S1, S4, S5 |
+| `GlinterWarning` | yellow | S6, S7, C1 |
+| `GlinterReplacement` | purple italic | simpler-word hint at end of line |
+
+```lua
+vim.api.nvim_set_hl(0, "GlinterHard", { link = "WarningMsg" })
+```
 
 ## Releases
 

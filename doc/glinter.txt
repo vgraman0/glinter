@@ -177,8 +177,7 @@ Merge, revert, fixup, squash, and amend subjects are exempt. Trailers such
 as `Signed-off-by:` and lines that hold only a URL are exempt from B1.
 
 Grade level, grammar, spelling, and Conventional Commit types are out of
-scope. The full catalog, with each heuristic, is in docs/rules.md in the
-repository.
+scope. The README table lists every rule id alongside these heuristics.
 
 ==============================================================================
 8. COMMAND LINE                                                  *glinter-cli*
