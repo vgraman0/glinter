@@ -4,13 +4,12 @@
 
 <img src="./doc/demo-no-zoom-v3.gif" alt="glinter highlighting weasel words in a git commit message"/>
 
-Live highlighting for git commit messages in Neovim.
+**glinter** flags problems in your git commit message while you write it. The rules are based on Chris Beams' ![prose conventions](https://cbea.ms/git-commit/) (imperative mood, body wrapping, etc). There are also guidelines for clearer language (long sentences, passive voice, simpler-word alternatives). See [Rules](#rules) for more details.
 
-While you type in `COMMIT_EDITMSG`, glinter paints the **message** lines
-only. Git comments and the verbose diff are left alone. The same rules
-run in a `commit-msg` hook and CI.
-
-Use Neovim, CLI, or skill. None of them needs the others.
+Three ways to run them, each standalone:
+- Neovim plugin
+- CLI for commit-msg hooks and CI
+- Skill.md if an agent writes your messages
 
 ## Contents
 
