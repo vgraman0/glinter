@@ -1,0 +1,185 @@
+*glinter.txt*  Live highlighting for git commit messages, while you type
+
+                                                      *glinter* *glinter.nvim*
+
+                       Structure follows Chris Beams.
+                       Prose follows clear English.
+                       No grade level. No Conventional Commits.
+
+==============================================================================
+CONTENTS                                                    *glinter-contents*
+
+  1. Intro ................................. |glinter-intro|
+  2. Usage ................................. |glinter-usage|
+  3. Configuration ......................... |glinter-config|
+  4. Commands and mappings ................. |glinter-commands|
+  5. Highlight groups ...................... |glinter-highlights|
+  6. Rules ................................. |glinter-rules|
+  7. Command line .......................... |glinter-cli|
+  8. Agent skill ........................... |glinter-skill|
+  9. License ............................... |glinter-license|
+
+==============================================================================
+1. INTRO                                                       *glinter-intro*
+
+glinter paints a commit message while you write it. It attaches to the
+'gitcommit' filetype, so it runs in COMMIT_EDITMSG when git opens Neovim.
+
+It paints the message lines only. Git comments and the verbose diff keep
+the highlighting they already have.
+
+Two rule sets run together. Structure comes from Chris Beams, How to Write
+a Git Commit Message: subject length, mood, and body wrapping. Prose comes
+from clear English: short sentences, active voice, and plain words. There
+is no readability score, and there are no Conventional Commit types.
+
+The same rules ship as a command line linter, a commit-msg hook, and an
+agent skill. None of them needs the others.
+
+==============================================================================
+2. USAGE                                                       *glinter-usage*
+
+Point git at Neovim, then commit as usual: >bash
+    git config --global core.editor nvim
+    git commit
+<
+Highlights appear as you type and follow every edit. Rest the cursor on
+one, or press K, to read the rule id and the fix, for example: >
+    [H4] Use active voice
+<
+A color column marks the subject limit at 73. Nothing blocks the
+commit. Quit with |:q| and git takes the message as written.
+
+To reject a bad message instead, use the commit-msg hook or the command
+line linter. See |glinter-cli|.
+
+==============================================================================
+3. CONFIGURATION                                              *glinter-config*
+
+The plugin calls |glinter.setup()| for you. Call it again only to change a
+default.
+
+glinter.setup({opts})                                        *glinter.setup()*
+
+    Parameters: ~
+      • {opts} (table) Options, all optional:
+
+        • {debounce_ms} (number) Milliseconds to wait after an edit before
+          repainting. Default 40.
+        • {colorcolumn} (boolean) Set 'colorcolumn' to 73 in the
+          commit buffer. Default true.
+        • {hover_ms} (number) Milliseconds the cursor must rest on a
+          highlight before the recommendation float opens. Default 300.
+
+    Example: >lua
+        require("glinter").setup({
+          debounce_ms = 40,
+          colorcolumn = true,
+          hover_ms = 300,
+        })
+<
+glinter.version                                              *glinter.version*
+
+    The installed version, as a string such as `0.1.0`.
+
+==============================================================================
+4. COMMANDS AND MAPPINGS                                    *glinter-commands*
+
+:GlinterHover                                                  *:GlinterHover*
+
+    Open the recommendation float for the highlight under the cursor. It
+    names the rule and the fix. Close it by moving the cursor.
+
+K                                                                  *glinter-K*
+
+    Same as |:GlinterHover|, mapped in the commit buffer only.
+
+:GlinterRefresh                                              *:GlinterRefresh*
+
+    Repaint the current buffer now. Edits repaint on their own, so this is
+    for a changed setting or a stale buffer.
+
+==============================================================================
+5. HIGHLIGHT GROUPS                                       *glinter-highlights*
+
+glinter defines its own colors rather than following your colorscheme, so
+the meaning of each color stays the same everywhere. Every group is a
+default, so your own |:highlight| command wins.
+
+    *hl-GlinterError*         Must fix: empty, uncapitalized, or
+                            period-ended subject (S0, S1, S4, S5)
+    *hl-GlinterWarning*       Should fix: mood, WIP, why-not-how
+                            (S6, S7, C1)
+    *hl-GlinterSubjectHard*   Subject past 72 characters, or an unwrapped
+                            body line (S3, B1)
+    *hl-GlinterHard*          Sentence over 20 words (H1)
+    *hl-GlinterVeryHard*      Sentence over 30 words (H2)
+    *hl-GlinterAdverb*        Manner adverb or intensifier (H3)
+    *hl-GlinterQualifier*     Hedge, such as `maybe` or `I think` (H5)
+    *hl-GlinterPassive*       Passive voice (H4)
+    *hl-GlinterComplex*       Word with a simpler synonym (H6)
+    *hl-GlinterReplacement*   The suggested simpler word, shown inline
+
+To follow your theme instead: >lua
+    vim.api.nvim_set_hl(0, "GlinterPassive", { link = "DiagnosticWarn" })
+<
+==============================================================================
+6. RULES                                                       *glinter-rules*
+
+Structure, from Chris Beams: >
+    S0  Subject is empty
+    S1  Blank line between subject and body
+    S3  Subject is over 72 characters
+    S4  Subject starts with a capital
+    S5  Subject does not end with punctuation
+    S6  Subject is in the imperative mood
+    S7  Subject does not start with WIP
+    B1  Body lines wrap at 72 characters
+    C1  Body explains why, not how
+<
+Prose, from clear English: >
+    H1  Sentence is over 20 words
+    H2  Sentence is over 30 words
+    H3  Adverb or intensifier
+    H4  Passive voice
+    H5  Hedge or qualifier
+    H6  Word with a simpler synonym
+<
+Merge, revert, fixup, squash, and amend subjects are exempt. Trailers such
+as `Signed-off-by:` and lines that hold only a URL are exempt from B1.
+
+Grade level, grammar, spelling, and Conventional Commit types are out of
+scope. The README table lists every rule id alongside these heuristics.
+
+==============================================================================
+7. COMMAND LINE                                                  *glinter-cli*
+
+The same rules run outside Neovim. The command exits 1 when it finds a
+problem, so a hook or a CI job can reject the message: >bash
+    bin/glinter FILE
+    bin/glinter --stdin
+    bin/glinter --range origin/main..HEAD
+    bin/glinter --version
+<
+Run `bin/glinter` from a clone. It needs Lua 5.1 or later, or Neovim.
+
+In a clone, `make hooks` points git at the bundled commit-msg hook, which
+rejects a commit that fails a rule.
+
+==============================================================================
+8. AGENT SKILL                                                 *glinter-skill*
+
+The rule tables also ship as an agent skill, so a coding agent writes
+commit messages the same way. Copy SKILL.md from the repository into
+your own project, or into ~/.cursor/skills/glinter/.
+
+Installing the plugin does not install the skill.
+
+==============================================================================
+9. LICENSE                                                   *glinter-license*
+
+MIT. See the LICENSE file in the repository.
+
+Source and issues: https://github.com/vgraman0/glinter
+
+vim:tw=78:ts=8:noet:ft=help:norl:

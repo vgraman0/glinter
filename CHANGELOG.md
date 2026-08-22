@@ -10,6 +10,11 @@ release. Breaking changes always show up here.
 
 ## [Unreleased]
 
+### Added
+
+- `:help glinter`, covering options, commands, highlight groups, the
+  rules, and the CLI.
+
 ### Removed
 
 - S2 (`subject-soft-length`): the 50-character subject warning. Subjects

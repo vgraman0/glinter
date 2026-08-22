@@ -110,6 +110,29 @@ vim.api.nvim_win_set_cursor(0, { 1, 0 })
 win = hover.show(buf)
 check(win == nil, "hover closes off a highlight")
 
+-- doc/glinter.txt: helptags has to build, and :help glinter has to land.
+local doc = root .. "doc"
+vim.fn.delete(doc .. "/tags")
+local tagged = pcall(vim.cmd, "helptags " .. vim.fn.fnameescape(doc))
+check(tagged, "helptags builds doc/glinter.txt")
+
+local tags = {}
+for _, entry in ipairs(vim.fn.readfile(doc .. "/tags")) do
+  tags[entry:match("^[^\t]+")] = true
+end
+for _, want in ipairs({
+  "glinter",
+  "glinter-config",
+  "glinter.setup()",
+  ":GlinterHover",
+}) do
+  check(tags[want], "doc tags include " .. want)
+end
+
+check(pcall(vim.cmd, "help glinter"), ":help glinter opens")
+check(vim.bo.filetype == "help", ":help glinter opens a help buffer")
+vim.fn.delete(doc .. "/tags")
+
 io.stdout:write(string.format("nvim highlight checks done, %d failed\n", failed))
 if failed > 0 then
   os.exit(1)
