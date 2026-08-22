@@ -10,12 +10,15 @@ release. Breaking changes always show up here.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-08-22
+
 ### Added
 
 - `:help glinter`, covering options, commands, highlight groups, the
   rules, and the CLI.
 - `:checkhealth glinter`, for the Neovim version, a git work tree, and
   the commit-msg hook.
+- A README screenshot of live highlighting in `COMMIT_EDITMSG`.
 
 ### Removed
 
@@ -47,5 +50,6 @@ First tagged release.
   in a push or a pull request.
 - A Cursor skill (`SKILL.md`) and rule that carry the same rule tables.
 
-[Unreleased]: https://github.com/vgraman0/glinter/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/vgraman0/glinter/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/vgraman0/glinter/releases/tag/v0.2.0
 [0.1.0]: https://github.com/vgraman0/glinter/releases/tag/v0.1.0

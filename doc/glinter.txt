@@ -81,7 +81,7 @@ glinter.setup({opts})                                        *glinter.setup()*
 <
 glinter.version                                              *glinter.version*
 
-    The installed version, as a string such as `0.1.0`.
+    The installed version, as a string such as `0.2.0`.
 
 ==============================================================================
 4. COMMANDS AND MAPPINGS                                    *glinter-commands*
