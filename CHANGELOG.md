@@ -10,6 +10,11 @@ release. Breaking changes always show up here.
 
 ## [Unreleased]
 
+### Removed
+
+- S2 (`subject-soft-length`): the 50-character subject warning. Subjects
+  may run to 72 characters. The color column is 73 only.
+
 ### Fixed
 
 - H3 no longer treats `Dragonfly` as an adverb.

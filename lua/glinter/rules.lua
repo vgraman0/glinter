@@ -15,7 +15,6 @@ function M.lint(text, opts)
 end
 
 M.catalog = catalog
-M.SUBJECT_SOFT = cbeams.SUBJECT_SOFT
 M.SUBJECT_HARD = cbeams.SUBJECT_HARD
 M.BODY_WRAP = cbeams.BODY_WRAP
 M.HARD_SENTENCE = english.HARD_SENTENCE

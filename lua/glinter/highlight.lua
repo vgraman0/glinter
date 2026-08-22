@@ -13,7 +13,6 @@ local config = {
 local GROUPS = {
   S0 = "GlinterError",
   S1 = "GlinterError",
-  S2 = "GlinterSubjectSoft",
   S3 = "GlinterSubjectHard",
   S4 = "GlinterError",
   S5 = "GlinterError",
@@ -33,7 +32,6 @@ local PRIORITY = {
   H1 = 50,
   H2 = 60,
   C1 = 70,
-  S2 = 100,
   S3 = 110,
   B1 = 110,
   H3 = 150,
@@ -70,7 +68,6 @@ local function define_highlights()
   paint("GlinterQualifier", "#90caf9", 117)
   paint("GlinterPassive", "#a5d6a7", 151)
   paint("GlinterComplex", "#ce93d8", 183)
-  paint("GlinterSubjectSoft", "#ffe082", 222)
   paint("GlinterSubjectHard", "#ff8a80", 210)
   paint("GlinterError", "#ff8a80", 210)
   paint("GlinterWarning", "#ffe082", 222)
@@ -196,7 +193,7 @@ function M.attach(buf)
   attached[buf] = true
   if config.colorcolumn then
     vim.api.nvim_buf_call(buf, function()
-      vim.opt_local.colorcolumn = "51,73"
+      vim.opt_local.colorcolumn = "73"
     end)
   end
   local group = vim.api.nvim_create_augroup("GlinterBuf" .. buf, { clear = true })

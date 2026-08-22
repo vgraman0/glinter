@@ -25,7 +25,6 @@ are optional extras, not requirements.
 | --- | --- |
 | S0 | Subject is not empty |
 | S1 | Blank line between subject and body (if there is a body) |
-| S2 | Subject ≤ 50 characters (warning; columns 51–72) |
 | S3 | Subject ≤ 72 characters (error; column 73+) |
 | S4 | Capitalize the subject. No leading space |
 | S5 | No `.` `!` `?` at the end of the subject |
@@ -72,7 +71,7 @@ at this time→now, in the event that→if. Sentence-initial however→but.
 Fix overflow on long commit subjects
 
 Subjects longer than 72 characters break git log and GitHub.
-Cap the hard limit and warn at 50 so the line stays a summary.
+Cap the hard limit at 72 so the line stays a summary.
 ```
 
 ## Fail
