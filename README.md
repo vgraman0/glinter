@@ -137,7 +137,8 @@ git commit
 Rest the cursor on a highlight (or press `K` / `:GlinterHover`) to see
 the rule id and the fix, for example `[H4] Use active voice`.
 
-Full docs in Neovim: `:help glinter`.
+Full docs in Neovim: `:help glinter`. Run `:checkhealth glinter` if
+highlighting or the hook does not look right.
 
 ## Rules
 

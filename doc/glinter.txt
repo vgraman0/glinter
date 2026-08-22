@@ -16,8 +16,9 @@ CONTENTS                                                    *glinter-contents*
   5. Highlight groups ...................... |glinter-highlights|
   6. Rules ................................. |glinter-rules|
   7. Command line .......................... |glinter-cli|
-  8. Agent skill ........................... |glinter-skill|
-  9. License ............................... |glinter-license|
+  8. Health ................................ |glinter-health|
+  9. Agent skill ........................... |glinter-skill|
+ 10. License ............................... |glinter-license|
 
 ==============================================================================
 1. INTRO                                                       *glinter-intro*
@@ -167,7 +168,21 @@ In a clone, `make hooks` points git at the bundled commit-msg hook, which
 rejects a commit that fails a rule.
 
 ==============================================================================
-8. AGENT SKILL                                                 *glinter-skill*
+8. HEALTH                                                    *glinter-health*
+
+:checkhealth glinter                                     *glinter-checkhealth*
+
+    Reports three things that usually explain "it does not work":
+
+    - The Neovim version. glinter needs 0.7 or newer.
+    - Whether the current directory is a git work tree. Highlighting
+      still runs in a gitcommit buffer; the hook and `glinter --range`
+      need a repository.
+    - Whether the active commit-msg hook runs glinter. The hook is
+      optional. In a clone, `make hooks` points git at `.githooks`.
+
+==============================================================================
+9. AGENT SKILL                                                 *glinter-skill*
 
 The rule tables also ship as an agent skill, so a coding agent writes
 commit messages the same way. Copy SKILL.md from the repository into
@@ -176,7 +191,7 @@ your own project, or into ~/.cursor/skills/glinter/.
 Installing the plugin does not install the skill.
 
 ==============================================================================
-9. LICENSE                                                   *glinter-license*
+10. LICENSE                                                  *glinter-license*
 
 MIT. See the LICENSE file in the repository.
 

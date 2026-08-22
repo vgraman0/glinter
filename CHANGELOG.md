@@ -14,6 +14,8 @@ release. Breaking changes always show up here.
 
 - `:help glinter`, covering options, commands, highlight groups, the
   rules, and the CLI.
+- `:checkhealth glinter`, for the Neovim version, a git work tree, and
+  the commit-msg hook.
 
 ### Removed
 
