@@ -1,6 +1,9 @@
 # Local Cursor config
 .cursor/
 
+# macOS folder metadata
+.DS_Store
+
 # Compiled Lua sources
 luac.out
 
