@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/vgraman0/glinter/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vgraman0/glinter/actions/workflows/ci.yml)
 
-![glinter highlighting weasel words in a git commit message](docs/glinter-demo.gif)
+<img src="./docs/glinter-demo.gif" alt="glinter highlighting weasel words in a git commit message"/>
 
 Live highlighting for git commit messages in Neovim.
 
