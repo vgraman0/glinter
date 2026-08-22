@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/vgraman0/glinter/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vgraman0/glinter/actions/workflows/ci.yml)
 
+![glinter highlighting weasel words in a git commit message](docs/glinter-demo.png)
+
 Live highlighting for git commit messages in Neovim.
 
 While you type in `COMMIT_EDITMSG`, glinter paints the **message** lines
