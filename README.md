@@ -10,7 +10,7 @@ While you type in `COMMIT_EDITMSG`, glinter paints the **message** lines
 only. Git comments and the verbose diff are left alone. The same rules
 run in a `commit-msg` hook and CI.
 
-Use Neovim, the CLI, or both. Neither requires the other.
+Use Neovim, CLI, or skill. None of them needs the others.
 
 ## Contents
 
@@ -19,6 +19,7 @@ Use Neovim, the CLI, or both. Neither requires the other.
 - [Quick Start](#quick-start)
 - [Rules](#rules)
 - [CLI and hook](#cli-and-hook)
+- [Skill (optional)](#skill-optional)
 - [Options](#options)
 - [Releases](#releases)
 
@@ -142,6 +143,9 @@ the rule id and the fix, for example `[H4] Use active voice`.
 Full docs in Neovim: `:help glinter`. Run `:checkhealth glinter` if
 highlighting or the hook does not look right.
 
+Agents can follow the same rules without Neovim: see
+[Skill (optional)](#skill-optional).
+
 ## Rules
 
 Git tooling and [How to Write a Git Commit Message](https://cbea.ms/git-commit/).
@@ -202,6 +206,14 @@ make test
 ```
 
 The hook fails on errors and warnings.
+
+## Skill (optional)
+
+The rule tables also ship as an agent skill, so a coding agent writes
+commit messages the same way. Copy [SKILL.md](SKILL.md) from the
+repository into your own project, or into `~/.cursor/skills/glinter/`.
+
+Installing the plugin does not install the skill.
 
 ## Options
 
