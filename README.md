@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/vgraman0/glinter/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vgraman0/glinter/actions/workflows/ci.yml)
 
-<img src="./docs/glinter-demo.gif" alt="glinter highlighting weasel words in a git commit message"/>
+<img src="./doc/glinter-demo.gif" alt="glinter highlighting weasel words in a git commit message"/>
 
 Live highlighting for git commit messages in Neovim.
 
@@ -256,7 +256,7 @@ vim.api.nvim_set_hl(0, "GlinterHard", { link = "WarningMsg" })
 
 Releases are tags of the form `vMAJOR.MINOR.PATCH`. Read
 [CHANGELOG.md](CHANGELOG.md) for what each one changed, and
-[docs/releasing.md](docs/releasing.md) for how to cut one.
+[doc/releasing.md](doc/releasing.md) for how to cut one.
 `bin/glinter --version` and `require("glinter").version` print the
 version you have.
 
