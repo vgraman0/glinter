@@ -4,7 +4,7 @@
 
 <img src="./doc/demo-no-zoom-v3.gif" alt="glinter highlighting weasel words in a git commit message"/>
 
-**glinter** flags problems in your git commit message while you write it. The rules are based on Chris Beams' ![prose conventions](https://cbea.ms/git-commit/) (imperative mood, body wrapping, etc). There are also guidelines for clearer language (long sentences, passive voice, simpler-word alternatives). See [Rules](#rules) for more details.
+**glinter** flags problems in your git commit message while you write it. The rules are based on Chris Beams' [prose conventions](https://cbea.ms/git-commit/) (imperative mood, body wrapping, etc). There are also guidelines for clearer language (long sentences, passive voice, simpler-word alternatives). See [Rules](#rules) for more details.
 
 Three ways to run them, each standalone:
 - Neovim plugin
