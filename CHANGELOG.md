@@ -10,6 +10,13 @@ release. Breaking changes always show up here.
 
 ## [Unreleased]
 
+### Added
+
+- `:help glinter`, covering options, commands, highlight groups, the
+  rules, and the CLI.
+- `:checkhealth glinter`, for the Neovim version, a git work tree, and
+  the commit-msg hook.
+
 ### Removed
 
 - S2 (`subject-soft-length`): the 50-character subject warning. Subjects

@@ -137,6 +137,9 @@ git commit
 Rest the cursor on a highlight (or press `K` / `:GlinterHover`) to see
 the rule id and the fix, for example `[H4] Use active voice`.
 
+Full docs in Neovim: `:help glinter`. Run `:checkhealth glinter` if
+highlighting or the hook does not look right.
+
 ## Rules
 
 Git tooling and [How to Write a Git Commit Message](https://cbea.ms/git-commit/).
@@ -175,6 +178,8 @@ Prefer short, active, plain sentences. Do not score grade level.
 | H4  | passive              | Be-verb plus past participle (green). |
 | H5  | qualifier            | Hedges such as `maybe`, `I think` (blue). |
 | H6  | simpler-word         | Closed list of weasel words with a simpler synonym (purple). |
+
+Each rule, with its heuristic, is also in `:help glinter-rules`.
 
 ## CLI and hook
 
