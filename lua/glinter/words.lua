@@ -133,7 +133,6 @@ M.simpler = {
   { from = "facilitate", to = "help" },
   { from = "necessitate", to = "need" },
   { from = "accomplish", to = "do" },
-  { from = "additional", to = "more" },
   { from = "sufficient", to = "enough" },
   { from = "commence", to = "start" },
   { from = "leverage", to = "use" },

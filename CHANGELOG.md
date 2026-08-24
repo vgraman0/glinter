@@ -21,6 +21,8 @@ release. Breaking changes always show up here.
 
 - S2 (`subject-soft-length`): the 50-character subject warning. Subjects
   may run to 72 characters. The color column is 73 only.
+- `additional` from the H6 simpler-word list. It does not always carry
+  the same meaning as `more`.
 
 ### Fixed
 
