@@ -210,7 +210,7 @@ The hook fails on errors and warnings.
 
 The rule tables also ship as an agent skill, so a coding agent writes
 commit messages the same way. Copy [SKILL.md](SKILL.md) from the
-repository into your own project, or into `~/.cursor/skills/glinter/`.
+repository into your own project.
 
 Installing the plugin does not install the skill.
 
