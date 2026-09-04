@@ -123,30 +123,6 @@ M.qualifiers = {
   "just",
 }
 
-M.simpler = {
-  { from = "due to the fact that", to = "because" },
-  { from = "in the event that", to = "if" },
-  { from = "in order to", to = "to" },
-  { from = "at this time", to = "now" },
-  { from = "subsequently", to = "then" },
-  { from = "demonstrate", to = "show" },
-  { from = "facilitate", to = "help" },
-  { from = "necessitate", to = "need" },
-  { from = "accomplish", to = "do" },
-  { from = "sufficient", to = "enough" },
-  { from = "commence", to = "start" },
-  { from = "leverage", to = "use" },
-  { from = "numerous", to = "many" },
-  { from = "regarding", to = "about" },
-  { from = "remainder", to = "rest" },
-  { from = "therefore", to = "so" },
-  { from = "terminate", to = "end" },
-  { from = "attempt", to = "try" },
-  { from = "utilize", to = "use" },
-  { from = "assist", to = "help" },
-  { from = "obtain", to = "get" },
-}
-
 M.be_verbs = set({
   "am",
   "is",

@@ -17,12 +17,17 @@ release. Breaking changes always show up here.
 - `:checkhealth glinter`, for the Neovim version, a git work tree, and
   the commit-msg hook.
 
+### Changed
+
+- The bundled commit-msg hook prints diagnostics. It does not abort the
+  commit. `bin/glinter` still exits 1, so CI can reject a bad message.
+
 ### Removed
 
 - S2 (`subject-soft-length`): the 50-character subject warning. Subjects
   may run to 72 characters. The color column is 73 only.
-- `additional` from the H6 simpler-word list. It does not always carry
-  the same meaning as `more`.
+- H6 (`simpler-word`): the closed list of weasel words and suggested
+  replacements. The alternatives were often a poor fit.
 
 ### Fixed
 

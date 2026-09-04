@@ -4,7 +4,7 @@
 
 <img src="./doc/demo-no-zoom-v3.gif" alt="glinter highlighting weasel words in a git commit message"/>
 
-**glinter** flags problems in your git commit message while you write it. The rules are based on Chris Beams' [prose conventions](https://cbea.ms/git-commit/) (imperative mood, body wrapping, etc). There are also guidelines for clearer language (long sentences, passive voice, simpler-word alternatives). See [Rules](#rules) for more details.
+**glinter** flags problems in your git commit message while you write it. The rules are based on Chris Beams' [prose conventions](https://cbea.ms/git-commit/) (imperative mood, body wrapping, etc). There are also guidelines for clearer language (long sentences, passive voice, hedges). See [Rules](#rules) for more details.
 
 Three ways to run them, each standalone:
 - Neovim plugin
@@ -182,13 +182,12 @@ Prefer short, active, plain sentences. Do not score grade level.
 | H3  | adverb               | Manner adverbs and intensifiers (blue). |
 | H4  | passive              | Be-verb plus past participle (green). |
 | H5  | qualifier            | Hedges such as `maybe`, `I think` (blue). |
-| H6  | simpler-word         | Closed list of weasel words with a simpler synonym (purple). |
 
 Each rule, with its heuristic, is also in `:help glinter-rules`.
 
 ## CLI and hook
 
-Optional enforcement, used in this repository:
+Optional CLI, used in this repository:
 
 ```
 bin/glinter FILE
@@ -204,7 +203,9 @@ make hooks    # git config core.hooksPath .githooks
 make test
 ```
 
-The hook fails on errors and warnings.
+The hook prints errors and warnings. It does not abort the commit.
+`bin/glinter` still exits 1 when it finds a problem, so CI can reject
+the message.
 
 ## Skill (optional)
 
@@ -241,11 +242,9 @@ you want them to follow a theme.
 | `GlinterAdverb` | blue | H3 |
 | `GlinterQualifier` | blue | H5 |
 | `GlinterPassive` | green | H4 |
-| `GlinterComplex` | purple | H6 |
 | `GlinterSubjectHard` | red | S3, B1 |
 | `GlinterError` | red | S0, S1, S4, S5 |
 | `GlinterWarning` | yellow | S6, S7, C1 |
-| `GlinterReplacement` | purple italic | simpler-word hint at end of line |
 
 ```lua
 vim.api.nvim_set_hl(0, "GlinterHard", { link = "WarningMsg" })

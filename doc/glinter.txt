@@ -51,8 +51,9 @@ one, or press K, to read the rule id and the fix, for example: >
 A color column marks the subject limit at 73. Nothing blocks the
 commit. Quit with |:q| and git takes the message as written.
 
-To reject a bad message instead, use the commit-msg hook or the command
-line linter. See |glinter-cli|.
+The bundled commit-msg hook prints the same diagnostics and still lets
+the commit through. To reject a bad message, run the command line
+linter in CI. See |glinter-cli|.
 
 ==============================================================================
 3. CONFIGURATION                                              *glinter-config*
@@ -118,8 +119,6 @@ default, so your own |:highlight| command wins.
     *hl-GlinterAdverb*        Manner adverb or intensifier (H3)
     *hl-GlinterQualifier*     Hedge, such as `maybe` or `I think` (H5)
     *hl-GlinterPassive*       Passive voice (H4)
-    *hl-GlinterComplex*       Word with a simpler synonym (H6)
-    *hl-GlinterReplacement*   The suggested simpler word, shown inline
 
 To follow your theme instead: >lua
     vim.api.nvim_set_hl(0, "GlinterPassive", { link = "DiagnosticWarn" })
@@ -144,7 +143,6 @@ Prose, from clear English: >
     H3  Adverb or intensifier
     H4  Passive voice
     H5  Hedge or qualifier
-    H6  Word with a simpler synonym
 <
 Merge, revert, fixup, squash, and amend subjects are exempt. Trailers such
 as `Signed-off-by:` and lines that hold only a URL are exempt from B1.
@@ -156,7 +154,7 @@ scope. The README table lists every rule id alongside these heuristics.
 7. COMMAND LINE                                                  *glinter-cli*
 
 The same rules run outside Neovim. The command exits 1 when it finds a
-problem, so a hook or a CI job can reject the message: >bash
+problem, so a CI job can reject the message: >bash
     bin/glinter FILE
     bin/glinter --stdin
     bin/glinter --range origin/main..HEAD
@@ -164,8 +162,8 @@ problem, so a hook or a CI job can reject the message: >bash
 <
 Run `bin/glinter` from a clone. It needs Lua 5.1 or later, or Neovim.
 
-In a clone, `make hooks` points git at the bundled commit-msg hook, which
-rejects a commit that fails a rule.
+In a clone, `make hooks` points git at the bundled commit-msg hook. The
+hook prints findings and does not abort the commit.
 
 ==============================================================================
 8. HEALTH                                                    *glinter-health*

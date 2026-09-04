@@ -14,7 +14,6 @@ local M = {
   H3 = { name = "adverb", severity = "warning" },
   H4 = { name = "passive", severity = "warning" },
   H5 = { name = "qualifier", severity = "warning" },
-  H6 = { name = "simpler-word", severity = "warning" },
 }
 
 return M

@@ -152,66 +152,12 @@ local function add_h4(out, parsed, claimed)
   end)
 end
 
-local function add_h6(out, parsed, claimed)
-  diag.each_prose_line(parsed, function(line)
-    local function however_ok(s)
-      if s == 1 then
-        return true
-      end
-      local before = line.text:sub(1, s - 1)
-      return before:find("[%.!?]%s+$") ~= nil
-    end
-
-    local from_h = 1
-    while true do
-      local s, e = util.find_word(line.text, "however", from_h)
-      if not s then
-        break
-      end
-      if however_ok(s) and not diag.occupied(claimed, line.lnum, s - 1, e) then
-        claimed[#claimed + 1] = { lnum = line.lnum, col = s - 1, end_col = e }
-        out[#out + 1] = diag.make("H6", {
-          lnum = line.lnum,
-          col = s - 1,
-          end_col = e,
-          message = "Use a simpler word",
-          replacement = "but",
-        })
-      end
-      from_h = s + 1
-    end
-
-    for i = 1, #words.simpler do
-      local item = words.simpler[i]
-      local from = 1
-      while true do
-        local s, e = util.find_word(line.text, item.from, from)
-        if not s then
-          break
-        end
-        if not diag.occupied(claimed, line.lnum, s - 1, e) then
-          claimed[#claimed + 1] = { lnum = line.lnum, col = s - 1, end_col = e }
-          out[#out + 1] = diag.make("H6", {
-            lnum = line.lnum,
-            col = s - 1,
-            end_col = e,
-            message = "Use a simpler word",
-            replacement = item.to,
-          })
-        end
-        from = s + 1
-      end
-    end
-  end)
-end
-
 function M.apply(out, parsed)
   add_h1_h2(out, parsed)
   local claimed = {}
   add_h5(out, parsed, claimed)
   add_h3(out, parsed, claimed)
   add_h4(out, parsed, claimed)
-  add_h6(out, parsed, claimed)
 end
 
 M.HARD_SENTENCE = HARD_SENTENCE

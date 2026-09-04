@@ -6,10 +6,12 @@ local function lint(text)
 end
 
 set_current("catalog-english")
-local ids = { "H1", "H2", "H3", "H4", "H5", "H6" }
+local ids = { "H1", "H2", "H3", "H4", "H5" }
 for i = 1, #ids do
   is_true(catalog[ids[i]] ~= nil, "catalog has " .. ids[i])
 end
+is_true(catalog["H6"] == nil, "catalog has no H6")
+is_true(has_no_rule(lint("Fix wrap\n\nDo not utilize the old API.\n"), "H6"), "utilize is not flagged")
 
 set_current("H1/H2")
 do
@@ -49,25 +51,12 @@ is_true(has_rule(lint("Fix the maybe broken wrap\n"), "H5"), "maybe")
 is_true(has_rule(lint("Fix wrap\n\nI think the cache is cold.\n"), "H5"), "I think")
 is_true(has_rule(lint("Just fix the wrap\n"), "H5"), "just")
 
-set_current("H6")
-do
-  local d = has_rule(lint("Fix wrap\n\nDo not utilize the old API.\n"), "H6")
-  is_true(d, "utilize")
-  if d then
-    eq(d.replacement, "use", "utilize -> use")
-  end
-  is_true(has_rule(lint("Fix wrap\n\nThis is needed in order to boot.\n"), "H6"), "in order to")
-  is_true(has_no_rule(lint("Fix wrap\n\nKeep it short however you wrap it.\n"), "H6"), "mid-sentence however")
-  is_true(has_rule(lint("Fix wrap\n\nHowever the old path leaked.\n"), "H6"), "sentence-initial however")
-end
-
 set_current("comments")
 do
   local text = "Fix wrap\n\nKeep comments out of prose checks.\n# really utilize maybe was written\n"
   local diags = lint(text)
   is_true(has_no_rule(diags, "H3"), "no adverb in comment")
   is_true(has_no_rule(diags, "H5"), "no qualifier in comment")
-  is_true(has_no_rule(diags, "H6"), "no simpler-word in comment")
   is_true(has_no_rule(diags, "H4"), "no passive in comment")
 end
 
@@ -86,7 +75,6 @@ do
   is_true(has_rule(diags, "S6"), "example S6")
   is_true(has_rule(diags, "H3"), "example H3")
   is_true(has_rule(diags, "H5"), "example H5")
-  is_true(has_rule(diags, "H6"), "example H6")
 end
 
 set_current("example-pass")

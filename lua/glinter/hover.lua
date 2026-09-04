@@ -20,7 +20,6 @@ local PRIORITY = {
   H3 = 150,
   H4 = 150,
   H5 = 150,
-  H6 = 160,
   S6 = 180,
   S7 = 180,
   S0 = 200,
@@ -81,11 +80,7 @@ function M.at_cursor(buf)
 end
 
 local function format_line(d)
-  local extra = ""
-  if d.replacement then
-    extra = " → " .. d.replacement
-  end
-  return string.format("[%s] %s%s", d.rule, d.message, extra)
+  return string.format("[%s] %s", d.rule, d.message)
 end
 
 function M.hide()
