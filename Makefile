@@ -7,6 +7,7 @@ test:
 	nvim --headless -u NONE -n -l tests/nvim_spec.lua
 	./bin/glinter tests/fixtures/good.txt
 	./bin/glinter tests/fixtures/bad.txt; test $$? -eq 1
+	./.githooks/commit-msg tests/fixtures/bad.txt >/dev/null
 
 hooks:
 	git config core.hooksPath .githooks

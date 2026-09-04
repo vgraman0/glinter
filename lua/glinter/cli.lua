@@ -26,19 +26,14 @@ local function format_diag(filename, d)
   local sev = d.severity
   local line = d.lnum + 1
   local col = d.col + 1
-  local extra = ""
-  if d.replacement then
-    extra = string.format(" (simpler: %s)", d.replacement)
-  end
   return string.format(
-    "%s:%d:%d: %s: [%s] %s%s",
+    "%s:%d:%d: %s: [%s] %s",
     filename,
     line,
     col,
     sev,
     d.rule,
-    d.message,
-    extra
+    d.message
   )
 end
 

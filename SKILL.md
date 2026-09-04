@@ -52,18 +52,10 @@ Prefer short, active, plain sentences. Do not score grade level.
 | H3 | blue | Adverbs (`really`, `quickly`, `very`, `too` + adjective) |
 | H4 | green | Passive (`was written`, `were added`) |
 | H5 | blue | Qualifiers (`maybe`, `I think`, `just`, `basically`) |
-| H6 | purple | Weasel word with a simpler synonym |
 
 `-ly` allowlist (do not flag): only, early, likely, daily, weekly, monthly,
 yearly, family, apply, supply, reply, ally, assembly, fly, firefly,
 dragonfly, butterfly.
-
-Simpler words: utilize→use, leverage→use, facilitate→help, commence→start,
-subsequently→then, therefore→so, attempt→try, obtain→get,
-regarding→about, numerous→many, assist→help, accomplish→do,
-demonstrate→show, terminate→end, remainder→rest, sufficient→enough,
-necessitate→need, in order to→to, due to the fact that→because,
-at this time→now, in the event that→if. Sentence-initial however→but.
 
 ## Pass
 

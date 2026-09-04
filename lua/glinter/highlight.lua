@@ -25,7 +25,6 @@ local GROUPS = {
   H3 = "GlinterAdverb",
   H4 = "GlinterPassive",
   H5 = "GlinterQualifier",
-  H6 = "GlinterComplex",
 }
 
 local PRIORITY = {
@@ -37,7 +36,6 @@ local PRIORITY = {
   H3 = 150,
   H4 = 150,
   H5 = 150,
-  H6 = 160,
   S6 = 180,
   S7 = 180,
   S0 = 200,
@@ -67,18 +65,9 @@ local function define_highlights()
   paint("GlinterAdverb", "#90caf9", 117)
   paint("GlinterQualifier", "#90caf9", 117)
   paint("GlinterPassive", "#a5d6a7", 151)
-  paint("GlinterComplex", "#ce93d8", 183)
   paint("GlinterSubjectHard", "#ff8a80", 210)
   paint("GlinterError", "#ff8a80", 210)
   paint("GlinterWarning", "#ffe082", 222)
-  set(0, "GlinterReplacement", {
-    default = true,
-    italic = true,
-    fg = "#4a148c",
-    ctermfg = 53,
-    bg = "#f3e5f5",
-    ctermbg = 183,
-  })
 end
 
 local function comment_char(lines)
@@ -90,32 +79,6 @@ local function comment_char(lines)
   return "#"
 end
 
-local function replacements_by_line(diags)
-  local by = {}
-  for i = 1, #diags do
-    local d = diags[i]
-    if d.replacement then
-      local l = d.lnum
-      by[l] = by[l] or {}
-      by[l][#by[l] + 1] = d.replacement
-    end
-  end
-  local shown = {}
-  for lnum, list in pairs(by) do
-    local parts = {}
-    local seen = {}
-    for i = 1, #list do
-      local r = list[i]
-      if not seen[r] then
-        seen[r] = true
-        parts[#parts + 1] = r
-      end
-    end
-    shown[lnum] = " → " .. table.concat(parts, ", ")
-  end
-  return shown
-end
-
 function M.refresh(buf)
   buf = buf or vim.api.nvim_get_current_buf()
   if not vim.api.nvim_buf_is_valid(buf) then
@@ -125,8 +88,6 @@ function M.refresh(buf)
   local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
   local text = table.concat(lines, "\n")
   local diags = rules.lint(text, { comment_char = comment_char(lines) })
-  local virt = replacements_by_line(diags)
-  local virt_used = {}
 
   for i = 1, #diags do
     local d = diags[i]
@@ -156,10 +117,6 @@ function M.refresh(buf)
       opts.hl_eol = true
       opts.virt_text = { { " " .. (d.message or d.rule), opts.hl_group } }
       opts.virt_text_pos = "eol"
-    elseif virt[d.lnum] and not virt_used[d.lnum] then
-      opts.virt_text = { { virt[d.lnum], "GlinterReplacement" } }
-      opts.virt_text_pos = "eol"
-      virt_used[d.lnum] = true
     end
 
     pcall(vim.api.nvim_buf_set_extmark, buf, ns, d.lnum, col, opts)

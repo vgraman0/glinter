@@ -124,8 +124,8 @@ function M.check()
     end
   elseif hook.found then
     h.info("commit-msg hook exists but does not run glinter: " .. hook.path)
-    h.info("The plugin still highlights. To enforce on commit,")
-    h.info("point the hook at bin/glinter.")
+    h.info("The plugin still highlights. To print findings on commit,")
+    h.info("point the hook at bin/glinter. The bundled hook does not abort.")
   else
     h.info("commit-msg hook is not installed (optional).")
     h.info("In a clone of glinter, `make hooks` points git at .githooks.")
